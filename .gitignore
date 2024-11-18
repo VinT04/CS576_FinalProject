@@ -1,0 +1,11 @@
+# Ignore everything by default
+*
+
+# Include specific folders and files
+!.gitignore
+!Assets/
+!ProjectSettings/
+!Packages/
+!Final_Project.sln
+!README.md
+!*.cs
