@@ -42,13 +42,13 @@ MonoBehaviour:
     m_Value: 1000
   baseHeight:
     m_OverrideState: 1
-    m_Value: 10
+    m_Value: 20
   maximumHeight:
     m_OverrideState: 0
     m_Value: 1000
   meanFreePath:
-    m_OverrideState: 1
-    m_Value: 400
+    m_OverrideState: 0
+    m_Value: 600
   enableVolumetricFog:
     m_OverrideState: 1
     m_Value: 1
@@ -133,9 +133,9 @@ MonoBehaviour:
     m_Value: 0
   type:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   sphericalMode:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   seaLevel:
     m_OverrideState: 0
