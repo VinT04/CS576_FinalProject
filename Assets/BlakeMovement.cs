@@ -2,85 +2,94 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class BlakeMovement:MonoBehaviour
 {
+
+    public Transform FollowTarget;
+    public Quaternion targetRotation;
+    public float velocity = 0f;
+    public Vector3 movement_direction;
     private Animator animation_controller;
     private CharacterController character_controller;
-    private CinemachineFreeLook camera;
-    public Vector3 movement_direction;
-    public float walking_velocity;
-    public float velocity;
-    private bool isDeath;
-    private string[] jump_states;
+    public float jumpforce = 10f;
+    public Vector3 jumpTarget;
 
     // Start is called before the first frame update
     void Start()
     {
+        FollowTarget = GameObject.Find("Follow Target").GetComponent<Transform>();
         animation_controller = GetComponent<Animator>();
         character_controller = GetComponent<CharacterController>();
-        camera = GameObject.Find("FreeLook Camera").GetComponent<CinemachineFreeLook>();
-        movement_direction = new Vector3(0.0f, 0.0f, 0.0f);
-        walking_velocity = 1.5f;
-        velocity = 0.0f;
-        isDeath = false;
-        jump_states = new string[] { "jump over", "jump ascending", "jump mid air", "jump descending", "jump landing" };
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (this.jump_states.Any(element => animation_controller.GetCurrentAnimatorStateInfo(0).IsName(element)))
+        if (animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump start") ||
+            animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump ascending") ||
+            animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump mid air") ||
+            animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump descending") ||
+            animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump landing"))
         {
-            velocity = Mathf.MoveTowards(velocity, walking_velocity * 3.0f, Time.deltaTime);
-        }
-        else if (isDeath)
-        {
-            velocity = 0f;
-        }
-        else if (Input.GetKey(KeyCode.W))
-        {
-            if (Input.GetKey(KeyCode.LeftShift))
+            transform.position = Vector3.MoveTowards(transform.position, jumpTarget, Time.deltaTime);
+            if (Vector3.Distance(transform.position, jumpTarget) < 0.1f)
             {
-                if (Input.GetKey(KeyCode.Space))
+                jumpTarget = transform.position - new Vector3(0, 1.5f, 0);
+            }
+        }
+        else
+        {
+            if (Input.GetKey(KeyCode.W))
+            {
+                if (Input.GetKey(KeyCode.LeftShift))
                 {
-                    // Jump
-                    velocity = Mathf.MoveTowards(velocity, walking_velocity * 3.0f, Time.deltaTime);
-                    animation_controller.Play("jump start");
+                    if (Input.GetKey(KeyCode.Space))
+                    {
+                        Debug.Log("JUMP");
+                        // Jump
+                        velocity = Mathf.MoveTowards(velocity, 5.0f, Time.deltaTime);
+                        Vector3 jumpTarget = transform.position + new Vector3(0, 1.5f, 0);
+                        jumpTarget = transform.position + new Vector3(0, 1.5f, 0);
+                        animation_controller.Play("jump start");
+                    }
+                    else
+                    {
+                        Debug.Log("RUNNING");
+                        // Sprint forwards
+                        velocity = Mathf.MoveTowards(velocity, 3.0f, Time.deltaTime * 2);
+                        animation_controller.SetInteger("state", 2);
+                    }
                 }
                 else
                 {
-                    // Sprint forwards
-                    velocity = Mathf.MoveTowards(velocity, walking_velocity * 2.0f, Time.deltaTime);
-                    animation_controller.SetInteger("state", 2);
+                    // Walk forwards
+                    Debug.Log("WALKING");
+                    velocity = Mathf.MoveTowards(velocity, 1f, Time.deltaTime);
+                    animation_controller.SetInteger("state", 1);
                 }
+                gameObject.transform.rotation = Quaternion.Euler(0, FollowTarget.eulerAngles.y + Input.GetAxis("Mouse X") * 1f, 0);
             }
             else
             {
-                // Walk forwards
-                velocity = Mathf.MoveTowards(velocity, walking_velocity, Time.deltaTime);
-                animation_controller.SetInteger("state", 1);
+                velocity = Mathf.MoveTowards(velocity, 0, Time.deltaTime * 2);
+                animation_controller.SetInteger("state", 0);
             }
         }
-        if (!Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow))
-        {
-            velocity = Mathf.MoveTowards(velocity, 0, Time.deltaTime);
-            animation_controller.SetInteger("state", 0);
-        }
 
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        float mouseX = Input.GetAxis("Mouse X"); // Calculate the target rotation based on mouse input
+        FollowTarget.rotation = Quaternion.Euler(0, FollowTarget.eulerAngles.y + mouseX * 1f, 0);
 
-        Transform cameraTransform = this.camera.transform;
-        float xdirection = Mathf.Sin(Mathf.Deg2Rad * cameraTransform.rotation.eulerAngles.y);
-        float zdirection = Mathf.Cos(Mathf.Deg2Rad * cameraTransform.rotation.eulerAngles.y);
+        float xdirection = Mathf.Sin(Mathf.Deg2Rad * FollowTarget.rotation.eulerAngles.y);
+        float zdirection = Mathf.Cos(Mathf.Deg2Rad * FollowTarget.rotation.eulerAngles.y);
         movement_direction = new Vector3(xdirection, 0.0f, zdirection);
 
         // character controller's move function is useful to prevent the character passing through the terrain
         // (changing transform's position does not make these checks)
         character_controller.Move(movement_direction * velocity * Time.deltaTime);
-
     }
 
 }
