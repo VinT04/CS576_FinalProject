@@ -1400,10 +1400,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FollowTarget: {fileID: 0}
   targetRotation: {x: 0, y: 0, z: 0, w: 0}
-  velocity: 0
+  velocity_forward: 0
   movement_direction: {x: 0, y: 0, z: 0}
-  jumpforce: 10
-  jumpTarget: {x: 0, y: 0, z: 0}
+  jumpTarget: 10
+  gravity: 20
+  speed: 1
 --- !u!143 &889413334
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1458,33 +1459,6 @@ CapsuleCollider:
   m_Height: 1.9
   m_Direction: 1
   m_Center: {x: 0, y: 0.95, z: 0}
---- !u!54 &889413338
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 889413330}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!4 &956553545 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000011488240504, guid: 847ad21e052823640b649f294605afb2, type: 3}
@@ -1996,9 +1970,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8356104788382652267, guid: a32b89e71fbd51d4d9b3d270682a75ce, type: 3}
       insertIndex: -1
       addedObject: {fileID: 889413337}
-    - targetCorrespondingSourceObject: {fileID: 8356104788382652267, guid: a32b89e71fbd51d4d9b3d270682a75ce, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 889413338}
   m_SourcePrefab: {fileID: 100100000, guid: a32b89e71fbd51d4d9b3d270682a75ce, type: 3}
 --- !u!1 &1291817489
 GameObject:
@@ -2204,7 +2175,7 @@ Camera:
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
-  m_FOVAxisMode: 0
+  m_FOVAxisMode: 1
   m_Iso: 200
   m_ShutterSpeed: 0.005
   m_Aperture: 16
@@ -2222,9 +2193,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.59
+  near clip plane: 0.54
   far clip plane: 1000
-  field of view: 60
+  field of view: 57.61674
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -2250,7 +2221,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1291817489}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.070317686, y: -0.048245285, z: 0.0034049198, w: 0.9963515}
+  m_LocalRotation: {x: 0.02110844, y: -0.036462378, z: 0.000770348, w: 0.99911183}
   m_LocalPosition: {x: 790.1557, y: 1.74, z: 693.8064}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2874,13 +2845,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1615552674}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.10422759, y: -0.99135, z: 0.013346552, w: 0.07863703}
+  m_LocalRotation: {x: 0.09190814, y: -0.97924757, z: 0.15500686, w: 0.09273685}
   m_LocalPosition: {x: 1146, y: 130, z: 1113}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 2.456, y: -171.183, z: -11.814}
+  m_LocalEulerAnglesHint: {x: 18.701, y: -170.696, z: -9.188}
 --- !u!114 &1615552677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3625,9 +3596,9 @@ MonoBehaviour:
   m_LookAt: {fileID: 1248375587}
   m_Follow: {fileID: 1248375587}
   m_Lens:
-    FieldOfView: 60
+    FieldOfView: 57.61674
     OrthographicSize: 5
-    NearClipPlane: 0.59
+    NearClipPlane: 0.54
     FarClipPlane: 1000
     Dutch: 0
     ModeOverride: 0
@@ -3658,7 +3629,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2111114722}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.070317686, y: -0.048245285, z: 0.0034049198, w: 0.9963515}
+  m_LocalRotation: {x: 0.02110844, y: -0.036462378, z: 0.000770348, w: 0.99911183}
   m_LocalPosition: {x: 790.1557, y: 1.74, z: 693.8064}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3724,13 +3695,13 @@ MonoBehaviour:
   m_HorizontalDamping: 0.5
   m_VerticalDamping: 0.5
   m_ScreenX: 0.29
-  m_ScreenY: 0.5
+  m_ScreenY: 0.59
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
   m_SoftZoneWidth: 0.8
   m_SoftZoneHeight: 0.8
-  m_BiasX: 0.2
-  m_BiasY: 0
+  m_BiasX: 0.209
+  m_BiasY: -0.1
   m_CenterOnActivate: 1
 --- !u!114 &2118883991
 MonoBehaviour:

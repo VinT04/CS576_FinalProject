@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -11,12 +12,14 @@ public class BlakeMovement:MonoBehaviour
 
     public Transform FollowTarget;
     public Quaternion targetRotation;
-    public float velocity = 0f;
+    public float velocity_forward = 0f;
     public Vector3 movement_direction;
     private Animator animation_controller;
     private CharacterController character_controller;
-    public float jumpforce = 10f;
-    public Vector3 jumpTarget;
+    private Vector3 moveDirection = Vector3.zero;
+    public float jumpTarget = 10f;
+    public float gravity = 25.0f;
+    public float speed = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -35,11 +38,6 @@ public class BlakeMovement:MonoBehaviour
             animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump descending") ||
             animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump landing"))
         {
-            transform.position = Vector3.MoveTowards(transform.position, jumpTarget, Time.deltaTime);
-            if (Vector3.Distance(transform.position, jumpTarget) < 0.1f)
-            {
-                jumpTarget = transform.position - new Vector3(0, 1.5f, 0);
-            }
         }
         else
         {
@@ -49,33 +47,30 @@ public class BlakeMovement:MonoBehaviour
                 {
                     if (Input.GetKey(KeyCode.Space))
                     {
-                        Debug.Log("JUMP");
                         // Jump
-                        velocity = Mathf.MoveTowards(velocity, 5.0f, Time.deltaTime);
-                        Vector3 jumpTarget = transform.position + new Vector3(0, 1.5f, 0);
-                        jumpTarget = transform.position + new Vector3(0, 1.5f, 0);
+                        moveDirection.y += 10f;
                         animation_controller.Play("jump start");
                     }
                     else
                     {
-                        Debug.Log("RUNNING");
                         // Sprint forwards
-                        velocity = Mathf.MoveTowards(velocity, 3.0f, Time.deltaTime * 2);
+                        moveDirection = transform.forward * Input.GetAxis("Vertical") * (speed * 5f);
                         animation_controller.SetInteger("state", 2);
                     }
                 }
                 else
                 {
                     // Walk forwards
-                    Debug.Log("WALKING");
-                    velocity = Mathf.MoveTowards(velocity, 1f, Time.deltaTime);
+                    moveDirection = transform.forward * Input.GetAxis("Vertical") * speed;
                     animation_controller.SetInteger("state", 1);
                 }
-                gameObject.transform.rotation = Quaternion.Euler(0, FollowTarget.eulerAngles.y + Input.GetAxis("Mouse X") * 1f, 0);
+                var move = FollowTarget.forward;
+                move.y = transform.position.y;
+                gameObject.transform.rotation = Quaternion.Euler(0, FollowTarget.eulerAngles.y, 0);
             }
             else
             {
-                velocity = Mathf.MoveTowards(velocity, 0, Time.deltaTime * 2);
+                moveDirection = transform.forward * Input.GetAxis("Vertical") * (speed * 5f);
                 animation_controller.SetInteger("state", 0);
             }
         }
@@ -83,14 +78,16 @@ public class BlakeMovement:MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X"); // Calculate the target rotation based on mouse input
         FollowTarget.rotation = Quaternion.Euler(0, FollowTarget.eulerAngles.y + mouseX * 1f, 0);
 
-        float xdirection = Mathf.Sin(Mathf.Deg2Rad * FollowTarget.rotation.eulerAngles.y);
-        float zdirection = Mathf.Cos(Mathf.Deg2Rad * FollowTarget.rotation.eulerAngles.y);
-        movement_direction = new Vector3(xdirection, 0.0f, zdirection);
-
-        // character controller's move function is useful to prevent the character passing through the terrain
-        // (changing transform's position does not make these checks)
-        character_controller.Move(movement_direction * velocity * Time.deltaTime);
+        character_controller.Move(moveDirection * Time.deltaTime);
+        if (transform.position.y > 0f)
+        {
+            moveDirection.y -= gravity * Time.deltaTime;
+        }
+        if (transform.position.y < 0f)
+        {
+            transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
+        }
     }
-
 }
+
 
