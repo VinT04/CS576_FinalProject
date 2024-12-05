@@ -9,5 +9,6 @@ This is the actual repository for the final project
 Packages you need:
 - 3D World Building
 - 3D Character and Animation
-- Visual Scripting
 - High Definition RP
+- At this point I hit generate lighting a couple times: WINDOW -> RENDERING -> LIGHTING -> GENERATE LIGHTING
+- Visual Scripting
