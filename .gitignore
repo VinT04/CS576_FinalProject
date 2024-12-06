@@ -4,8 +4,13 @@
 # Include specific folders and files
 !.gitignore
 !Assets/
+!Assets/**
 !ProjectSettings/
+!ProjectSettings/**
 !Packages/
+!Packages/**
 !Final_Project.sln
 !README.md
 !*.cs
+
+*.json
