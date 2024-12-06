@@ -12,4 +12,5 @@
 !Final_Project.sln
 !README.md
 !*.cs
-!*.json
+
+*.json
