@@ -1,4 +1,3 @@
-using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +8,7 @@ using UnityEngine;
 
 public class BlakeMovement:MonoBehaviour
 {
-
-    public Transform FollowTarget;
+    public Camera Camera;
     public Quaternion targetRotation;
     public float velocity_forward = 0f;
     public Vector3 movement_direction;
@@ -24,7 +22,6 @@ public class BlakeMovement:MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        FollowTarget = GameObject.Find("Follow Target").GetComponent<Transform>();
         animation_controller = GetComponent<Animator>();
         character_controller = GetComponent<CharacterController>();
     }
@@ -43,13 +40,17 @@ public class BlakeMovement:MonoBehaviour
         {
             if (Input.GetKey(KeyCode.W))
             {
+                transform.rotation = Camera.transform.rotation;
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
                     if (Input.GetKey(KeyCode.Space))
                     {
                         // Jump
-                        moveDirection.y += 10f;
-                        animation_controller.Play("jump start");
+                        if (transform.position.y == 0f)
+                        {
+                            moveDirection.y += 10f;
+                            animation_controller.Play("jump start");
+                        }
                     }
                     else
                     {
@@ -64,28 +65,36 @@ public class BlakeMovement:MonoBehaviour
                     moveDirection = transform.forward * Input.GetAxis("Vertical") * speed;
                     animation_controller.SetInteger("state", 1);
                 }
-                var move = FollowTarget.forward;
-                move.y = transform.position.y;
-                gameObject.transform.rotation = Quaternion.Euler(0, FollowTarget.eulerAngles.y, 0);
             }
             else
             {
+                // Stop moving
                 moveDirection = transform.forward * Input.GetAxis("Vertical") * (speed * 5f);
                 animation_controller.SetInteger("state", 0);
             }
         }
 
-        float mouseX = Input.GetAxis("Mouse X"); // Calculate the target rotation based on mouse input
-        FollowTarget.rotation = Quaternion.Euler(0, FollowTarget.eulerAngles.y + mouseX * 1f, 0);
+        // Handle the rotation of the character
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            Camera.transform.RotateAround(transform.position, Vector3.up, -100f * Time.deltaTime);
+        }
+        else if (Input.GetKey(KeyCode.RightArrow))
+        {
+            Camera.transform.RotateAround(transform.position, Vector3.up, 100f * Time.deltaTime);
+        }
 
+        // Handle movement of character and camera follow
         character_controller.Move(moveDirection * Time.deltaTime);
+        Camera.transform.position = Camera.transform.position + moveDirection * Time.deltaTime;
         if (transform.position.y > 0f)
         {
             moveDirection.y -= gravity * Time.deltaTime;
         }
-        if (transform.position.y < 0f)
+        if (transform.position.y < 0f || Camera.transform.position.y < 1.68f)
         {
             transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
+            Camera.transform.position = new Vector3(Camera.transform.position.x, 1.68f, Camera.transform.position.z);
         }
     }
 }
