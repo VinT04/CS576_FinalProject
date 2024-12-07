@@ -40,13 +40,17 @@ public class BlakeMovement:MonoBehaviour
         {
             if (Input.GetKey(KeyCode.W))
             {
+                transform.rotation = Camera.transform.rotation;
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
                     if (Input.GetKey(KeyCode.Space))
                     {
                         // Jump
-                        moveDirection.y += 10f;
-                        animation_controller.Play("jump start");
+                        if (transform.position.y == 0f)
+                        {
+                            moveDirection.y += 10f;
+                            animation_controller.Play("jump start");
+                        }
                     }
                     else
                     {
@@ -87,10 +91,10 @@ public class BlakeMovement:MonoBehaviour
         {
             moveDirection.y -= gravity * Time.deltaTime;
         }
-        if (transform.position.y < 0f)
+        if (transform.position.y < 0f || Camera.transform.position.y < 1.68f)
         {
             transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
-            Camera.transform.position = new Vector3(Camera.transform.position.x, 0f, Camera.transform.position.z);
+            Camera.transform.position = new Vector3(Camera.transform.position.x, 1.68f, Camera.transform.position.z);
         }
     }
 }
