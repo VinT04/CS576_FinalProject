@@ -64,5 +64,5 @@ GraphicsSettings:
     UnityEngine.Rendering.HighDefinition.HDRenderPipeline: {fileID: 11400000, guid: 785a187a96f49984d9de4b01cb725ce4, type: 2}
     UnityEngine.Rendering.Universal.UniversalRenderPipeline: {fileID: 11400000, guid: 13b69711d471756449cd00c7118a298a, type: 2}
   m_LightProbeOutsideHullStrategy: 0
-  m_CameraRelativeLightCulling: 0
-  m_CameraRelativeShadowCulling: 0
+  m_CameraRelativeLightCulling: 1
+  m_CameraRelativeShadowCulling: 1
