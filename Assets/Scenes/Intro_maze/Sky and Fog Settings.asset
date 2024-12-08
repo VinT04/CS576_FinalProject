@@ -47,7 +47,7 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 54.4
   meanFreePath:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 5.17
   enableVolumetricFog:
     m_OverrideState: 1
@@ -253,10 +253,10 @@ MonoBehaviour:
   active: 1
   skyType:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 4
   cloudType:
-    m_OverrideState: 1
-    m_Value: 0
+    m_OverrideState: 0
+    m_Value: 1
   skyAmbientMode:
     m_OverrideState: 0
     m_Value: 1
