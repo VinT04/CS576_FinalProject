@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Cinemachine;
 
@@ -41,7 +40,7 @@ public class BlakeMovement:MonoBehaviour
         }
         else
         {
-            if (Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
@@ -74,29 +73,29 @@ public class BlakeMovement:MonoBehaviour
         }
 
         // Handle the rotation of the character
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
             isRotatingLeft = true;
         }
-        if (Input.GetKeyUp(KeyCode.LeftArrow))
+        if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A))
         {
             isRotatingLeft = false;
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
             isRotatingRight = true;
         }
-        if (Input.GetKeyUp(KeyCode.RightArrow))
+        if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D))
         {
             isRotatingRight = false;
         }
         if (isRotatingLeft)
         {
-            transform.Rotate(0, -200f * Time.deltaTime, 0);
+            transform.Rotate(0, -100f * Time.deltaTime, 0);
         }
         if (isRotatingRight)
         {
-            transform.Rotate(0, 200f * Time.deltaTime, 0);
+            transform.Rotate(0, 100f * Time.deltaTime, 0);
         }
 
         // Handle movement of character and camera follow
