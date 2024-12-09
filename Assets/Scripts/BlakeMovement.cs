@@ -55,47 +55,65 @@ public class BlakeMovement:MonoBehaviour
                     else
                     {
                         // Sprint forwards
-                        moveDirection = transform.forward * Input.GetAxis("Vertical") * (speed * 5f);
+                        moveDirection = transform.forward * Input.GetAxis("Vertical") * (speed * 4f);
                         animation_controller.SetInteger("state", 2);
                     }
                 }
                 else
                 {
+                    
                     // Walk forwards
-                    moveDirection = transform.forward * Input.GetAxis("Vertical") * speed;
+                    moveDirection = transform.forward * Input.GetAxis("Vertical") * speed*2f;
                     animation_controller.SetInteger("state", 1);
                 }
             }
             else
             {
                 // Stop moving
-                moveDirection = transform.forward * Input.GetAxis("Vertical") * (speed * 5f);
+                moveDirection = transform.forward * Input.GetAxis("Vertical") * (speed * 0f);
                 animation_controller.SetInteger("state", 0);
+            }
+            // Jump
+            if (Input.GetKey(KeyCode.Space))
+            {
+                if (transform.position.y == 0f)
+                {
+                    moveDirection.y += 10f;
+                    animation_controller.Play("jump start");
+                }
             }
         }
 
-        // Handle the rotation of the character
+        // Rotate Camera
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            Camera.transform.RotateAround(transform.position, Vector3.up, -100f * Time.deltaTime);
+            Camera.transform.RotateAround(transform.position, Vector3.up, -90f * Time.deltaTime);
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            Camera.transform.RotateAround(transform.position, Vector3.up, 100f * Time.deltaTime);
+            Camera.transform.RotateAround(transform.position, Vector3.up, 90f * Time.deltaTime);
         }
 
-        // Handle movement of character and camera follow
+        // Move
         character_controller.Move(moveDirection * Time.deltaTime);
-        Camera.transform.position = Camera.transform.position + moveDirection * Time.deltaTime;
-        if (transform.position.y > 0f)
+
+        // Camera offset from player
+        Vector3 cameraOffset = new Vector3(0, 1.8f, -1.3f); // Adjust Y and Z for third-person position
+        Vector3 targetCameraPosition = transform.position + transform.TransformDirection(cameraOffset);
+
+        float smoothSpeed = 5f;
+        Camera.transform.position = Vector3.Lerp(Camera.transform.position, targetCameraPosition, smoothSpeed * Time.deltaTime);
+
+        // Gravity handling
+        if (!character_controller.isGrounded)
         {
-            moveDirection.y -= gravity * Time.deltaTime;
+            moveDirection.y -= gravity * Time.deltaTime; // Apply gravity
         }
-        if (transform.position.y < 0f || Camera.transform.position.y < 1.68f)
+        else
         {
-            transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
-            Camera.transform.position = new Vector3(Camera.transform.position.x, 1.68f, Camera.transform.position.z);
+            moveDirection.y = 0f; // Reset vertical velocity when grounded
         }
+
     }
 }
 

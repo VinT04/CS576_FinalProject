@@ -52,6 +52,10 @@ public class Pyramid:MonoBehaviour
         initRooms(map);
         drawMap();
 
+        if (!wallPrefab.GetComponent<Collider>())
+        {
+            wallPrefab.AddComponent<BoxCollider>();
+        }
 
     }
 
@@ -289,6 +293,12 @@ public class Pyramid:MonoBehaviour
                     obj.name = "WALL";
                     obj.transform.localScale = new Vector3(bounds.size[0] / (float)width, wallHeight, bounds.size[2] / (float)length);
                     obj.transform.position = new Vector3(x + 0.5f, y, z + 0.5f);
+
+                    BoxCollider collider = obj.GetComponent<BoxCollider>();
+                    if (!collider)
+                    {
+                        collider = obj.AddComponent<BoxCollider>();
+                    }
                 }
                 else if (map[w, l] == CellType.DOOR)
                 {
