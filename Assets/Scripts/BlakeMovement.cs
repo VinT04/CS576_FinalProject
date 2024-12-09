@@ -55,7 +55,7 @@ public class BlakeMovement:MonoBehaviour
                     else
                     {
                         // Sprint forwards
-                        moveDirection = transform.forward * Input.GetAxis("Vertical") * (speed * 4f);
+                        moveDirection = transform.forward * Input.GetAxis("Vertical") * (speed * 5f);
                         animation_controller.SetInteger("state", 2);
                     }
                 }
