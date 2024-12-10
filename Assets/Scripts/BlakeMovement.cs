@@ -6,18 +6,18 @@ using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class BlakeMovement:MonoBehaviour
+public class BlakeMovement : MonoBehaviour
 {
     public Camera Camera;
     public Quaternion targetRotation;
-    public float velocity_forward = 0f;
+    public float velocity_forward = 5f;
     public Vector3 movement_direction;
     private Animator animation_controller;
     private CharacterController character_controller;
     private Vector3 moveDirection = Vector3.zero;
     public float jumpTarget = 10f;
     public float gravity = 25.0f;
-    public float speed = 1f;
+    public float speed = 5f;
 
     // Start is called before the first frame update
     void Start()
