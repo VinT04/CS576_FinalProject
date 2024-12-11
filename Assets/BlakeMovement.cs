@@ -75,11 +75,11 @@ public class BlakeMovement:MonoBehaviour
         }
 
         // Handle the rotation of the character
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
             Camera.transform.RotateAround(transform.position, Vector3.up, -100f * Time.deltaTime);
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
+        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
             Camera.transform.RotateAround(transform.position, Vector3.up, 100f * Time.deltaTime);
         }
