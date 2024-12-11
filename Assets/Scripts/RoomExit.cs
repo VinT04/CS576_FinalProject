@@ -69,7 +69,7 @@ public class RoomExit : MonoBehaviour
         // Move the player to the exit location
         if (player != null)
         {
-            player.GetComponent<BlakeMovement>().teleport(exitLocation);
+            //player.GetComponent<BlakeMovement>().teleport(exitLocation);
         }
     }
 }

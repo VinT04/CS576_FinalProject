@@ -29,7 +29,7 @@ public class EntranceTrigger : MonoBehaviour
             BlakeMovement blakeMovement = player.GetComponent<BlakeMovement>();
             if (blakeMovement != null)
             {
-                blakeMovement.teleport(new Vector3(842.3f, 0.153762f, 783.6736f));
+                //blakeMovement.teleport(new Vector3(842.3f, 0.153762f, 783.6736f));
             }
             else
             {

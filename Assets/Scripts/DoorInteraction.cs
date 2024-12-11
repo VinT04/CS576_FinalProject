@@ -62,7 +62,7 @@ public class DoorInteraction : MonoBehaviour
         // Move the player to the room's starting position
         if (player != null)
         {
-            player.GetComponent<BlakeMovement>().teleport(new Vector3(2f, 1f, 2f)); // Adjust room start position
+            //player.GetComponent<BlakeMovement>().teleport(new Vector3(2f, 1f, 2f)); // Adjust room start position
         }
     }
 }
