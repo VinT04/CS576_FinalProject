@@ -3654,6 +3654,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: The Adventurer Blake
       objectReference: {fileID: 0}
+    - target: {fileID: 973690985654400799, guid: 720f17d2c650bdf4f9d99751f645d538, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 4312309970339677452, guid: 720f17d2c650bdf4f9d99751f645d538, type: 3}
       propertyPath: m_LocalPosition.x
       value: 789.7347
