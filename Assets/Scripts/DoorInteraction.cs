@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 
 public class DoorInteraction : MonoBehaviour
 {
@@ -10,6 +12,22 @@ public class DoorInteraction : MonoBehaviour
     public string roomSceneName = "Room"; // Base room scene name
     public int roomIndex; // Room identifier (e.g., 1 to 5)
     public string mazeSceneName = "Intro_maze";
+    public Text interactionText; // Reference to the TextMeshProUGUI element
+
+    private void Start()
+    {
+        // Locate the InteractionText UI element dynamically
+        GameObject textObject = GameObject.Find("InteractionText");
+        if (textObject != null)
+        {
+            interactionText = textObject.GetComponent<Text>();
+            interactionText.gameObject.SetActive(false); // Ensure it's hidden initially
+        }
+        else
+        {
+            Debug.LogError("Interaction Text object not found in the scene.");
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -18,6 +36,13 @@ public class DoorInteraction : MonoBehaviour
             isPlayerNear = true;
             player = other.gameObject;
             Debug.Log($"Player is near door to Room {roomIndex}. Press 'F' to enter.");
+        }
+
+        // Display the interaction text
+        if (interactionText != null)
+        {
+            interactionText.text = $"Press 'F' to enter room";
+            interactionText.gameObject.SetActive(true);
         }
     }
 
@@ -28,6 +53,11 @@ public class DoorInteraction : MonoBehaviour
             isPlayerNear = false;
             player = null;
             Debug.Log("Player left the door area.");
+        }
+        // Hide the interaction text
+        if (interactionText != null)
+        {
+            interactionText.gameObject.SetActive(false);
         }
     }
 
