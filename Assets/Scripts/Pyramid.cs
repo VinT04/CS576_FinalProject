@@ -108,6 +108,7 @@ public class Pyramid:MonoBehaviour
         grid[6, 1] = CellType.FLOOR;
         grid[6, 14] = CellType.FLOOR;
         grid[6, 18] = CellType.FLOOR;
+        grid[6, 23] = CellType.FLOOR;
 
         grid[7, 1] = CellType.FLOOR;
         for (int i = 3; i < 9; i++)
