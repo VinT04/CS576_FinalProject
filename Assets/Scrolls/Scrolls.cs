@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Scrolls : MonoBehaviour
 {
-
+    private Animator animation_controller;
+    private Animation anim;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        anim = gameObject.GetComponent<Animation>();
     }
 
     // Update is called once per frame
@@ -20,18 +21,14 @@ public class Scrolls : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        //Check for a match with the specified name on any GameObject that collides with your GameObject
         if (collision.gameObject.name == "The Adventurer Blake Variant")
         {
-            //If the GameObject's name matches the one you suggest, output this message in the console
-            Debug.Log("Do something here");
-        }
-
-        //Check for a match with the specific tag on any GameObject that collides with your GameObject
-        if (collision.gameObject.tag == "MyGameObjectTag")
-        {
-            //If the GameObject has the same tag as specified, output this message in the console
-            Debug.Log("Do something else here");
+            if (anim.isPlaying)
+            {
+                return;
+            }
+            anim.Play("spin");
+            animation_controller.Play("ScrollAnimation");
         }
     }
 }
