@@ -16,7 +16,8 @@ enum CellType
     R5 = 8,
     EXIT = 9,
     ENTRANCE = 10,
-    PEDESTAL = 11
+    PEDESTAL = 11,
+    DOORMAT = 12,
 }
 public class Pyramid:MonoBehaviour
 {
@@ -234,40 +235,45 @@ public class Pyramid:MonoBehaviour
         grid[4, 8] = CellType.R1;
         grid[4, 9] = CellType.R1;
 
+        grid[3, 6] = CellType.DOORMAT; // R1 doormat
         grid[3, 7] = CellType.DOOR;
-        grid[4, 10] = CellType.DOOR;
+        grid[4, 10] = CellType.EXIT;
 
         grid[4, 21] = CellType.R2;
         grid[4, 22] = CellType.R2;
         grid[5, 21] = CellType.R2;
         grid[5, 22] = CellType.R2;
 
-        grid[4, 20] = CellType.DOOR;
+        grid[4, 20] = CellType.EXIT;
         grid[5, 23] = CellType.DOOR;
+        grid[6, 23] = CellType.DOORMAT; // R2 doormat
 
         grid[13, 19] = CellType.R3;
         grid[13, 20] = CellType.R3;
         grid[14, 19] = CellType.R3;
         grid[14, 20] = CellType.R3;
 
-        grid[12, 19] = CellType.DOOR;
+        grid[12, 19] = CellType.EXIT;
         grid[15, 20] = CellType.DOOR;
+        grid[16, 20] = CellType.DOORMAT; // R3 doormat
 
         grid[16, 13] = CellType.R4;
         grid[16, 14] = CellType.R4;
         grid[17, 13] = CellType.R4;
         grid[17, 14] = CellType.R4;
 
+        grid[15, 15] = CellType.DOORMAT; // R4 doormat
         grid[16, 15] = CellType.DOOR;
-        grid[18, 13] = CellType.DOOR;
+        grid[18, 13] = CellType.EXIT;
 
         grid[18, 1] = CellType.R5;
         grid[18, 2] = CellType.R5;
         grid[19, 1] = CellType.R5;
         grid[19, 2] = CellType.R5;
 
+        grid[18, 4] = CellType.DOORMAT; // R5 doormat
         grid[18, 3] = CellType.DOOR;
-        grid[20, 2] = CellType.DOOR;
+        grid[20, 2] = CellType.EXIT;
 
         grid[12,0] = CellType.ENTRANCE;
 
@@ -278,6 +284,11 @@ public class Pyramid:MonoBehaviour
                 grid[i, j] = CellType.TREASURE;
             }
         }
+
+        // Ankh-room:
+        grid[10, 12] = CellType.EXIT;
+        grid[12, 14] = CellType.DOOR;
+        grid[12, 15] = CellType.DOORMAT; // AR doormat
 
     }
 
@@ -320,11 +331,7 @@ public class Pyramid:MonoBehaviour
                     {
                         collider = obj.AddComponent<BoxCollider>();
                     }
-                    collider.isTrigger = true; // Make it a trigger collider
-
-                    obj.AddComponent<DoorInteraction>(); // Attach custom script
                 }
-
                 else if (map[w, l] == CellType.EXIT)
                 {
                     GameObject obj = Instantiate(doorPrefab);
@@ -349,8 +356,23 @@ public class Pyramid:MonoBehaviour
                     {
                         collider = obj.AddComponent<BoxCollider>();
                     }
-                    collider.isTrigger = true; // Make it a trigger collider
-                    obj.AddComponent<EntranceTrigger>(); // Attach the custom script
+                    collider.isTrigger = true;
+                    obj.AddComponent<EntranceTrigger>(); // THIS SHOULD BE CHANGED
+                }
+                else if (map[w, l] == CellType.DOORMAT)
+                {
+                    GameObject obj = new GameObject("DOORMAT"); // Empty object to handle entering rooms
+                    obj.name = "DOORMAT";
+                    
+                    obj.transform.position = new Vector3(x + 0.5f, y, z + 0.5f);
+                    obj.transform.parent = transform;
+
+                    BoxCollider collider = obj.AddComponent<BoxCollider>();
+                    
+                    collider.isTrigger = true; 
+                    collider.size = new Vector3(bounds.size[0] / (float)width, wallHeight / 2, bounds.size[2] / (float)length);
+
+                    obj.AddComponent<DoorInteraction>(); // For door handling stuff
                 }
             }
         }
