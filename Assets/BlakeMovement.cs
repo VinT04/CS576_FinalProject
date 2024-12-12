@@ -9,7 +9,6 @@ using Cinemachine;
 public class BlakeMovement:MonoBehaviour
 {
     public float velocity_forward = 0f;
-    public Cinemachine3rdPersonFollow Camera;
     public GameObject FollowTarget;
     public Vector3 movement_direction;
     private Animator animation_controller;
@@ -40,52 +39,68 @@ public class BlakeMovement:MonoBehaviour
         }
         else
         {
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+            if (Input.GetKey(KeyCode.W))
             {
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
                     if (Input.GetKey(KeyCode.Space))
                     {
-                        // Jump
                         moveDirection.y += 10f;
                         animation_controller.Play("jump start");
                     }
                     else
                     {
-                        // Sprint forwards
-                        moveDirection = transform.forward * Input.GetAxis("Vertical") * (speed * 5f);
+                        // Sprint
+                        moveDirection = transform.forward * Input.GetAxis("Vertical") * speed * 5f;
                         animation_controller.SetInteger("state", 2);
                     }
                 }
                 else
                 {
-                    // Walk forwards
+                    // Walk
                     moveDirection = transform.forward * Input.GetAxis("Vertical") * speed;
                     animation_controller.SetInteger("state", 1);
                 }
             }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                // Walk backwards
+                moveDirection = transform.forward * Input.GetAxis("Vertical") * speed;
+                animation_controller.SetInteger("state", 6);
+            }
+            else if (Input.GetKey(KeyCode.A))
+            {
+                // Walk left
+                moveDirection = transform.right * Input.GetAxis("Horizontal") * speed;
+                animation_controller.SetInteger("state", 5);
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                // Walk right
+                moveDirection = transform.right * Input.GetAxis("Horizontal") * speed;
+                animation_controller.SetInteger("state", 4);
+            }
             else
             {
-                // Stop moving
-                moveDirection = transform.forward * Input.GetAxis("Vertical") * (speed * 5f);
+                moveDirection = Vector3.Slerp(moveDirection, Vector3.zero, 2f * Time.deltaTime);
                 animation_controller.SetInteger("state", 0);
             }
         }
-
+        Debug.Log(animation_controller.GetInteger("state"));
         // Handle the rotation of the character
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             isRotatingLeft = true;
         }
-        if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A))
+        if (Input.GetKeyUp(KeyCode.LeftArrow))
         {
             isRotatingLeft = false;
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             isRotatingRight = true;
         }
-        if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D))
+        if (Input.GetKeyUp(KeyCode.RightArrow))
         {
             isRotatingRight = false;
         }
@@ -100,13 +115,13 @@ public class BlakeMovement:MonoBehaviour
 
         // Handle movement of character and camera follow
         character_controller.Move(moveDirection * Time.deltaTime);
-        if (transform.position.y > 0f)
+        if (transform.position.y > -1.95f)
         {
             moveDirection.y -= gravity * Time.deltaTime;
         }
-        if (transform.position.y < 0f)
+        if (transform.position.y < -1.95f)
         {
-            transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, -1.95f, transform.position.z);
         }
     }
 }
