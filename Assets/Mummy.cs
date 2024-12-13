@@ -12,6 +12,7 @@ public class Mummy : MonoBehaviour
     private Pyramid pyramid;
     private float radius;
     private float speed;
+    private Animator animation_controller;
     void Start()
     {
         // Use similar logic to virus from project 5
@@ -20,13 +21,14 @@ public class Mummy : MonoBehaviour
         radius = 10f;
         speed = 1f;
         pyramid = plane.GetComponent<Pyramid>();
+        animation_controller = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
         // Todo
-        // Need to have mummy animations along with these actions
+        // Make mummy rotate in direction
 
         RaycastHit hit;
         Vector3 dir = (player.transform.position - transform.position);
@@ -42,6 +44,7 @@ public class Mummy : MonoBehaviour
                 dir *= speed * 1.5f * Time.deltaTime;
                 dir.y = 0;
                 transform.position = transform.position + dir;
+                transform.rotation = Quaternion.LookRotation(dir);
             }
         }
 
@@ -90,6 +93,7 @@ public class Mummy : MonoBehaviour
                 movement.Normalize();
                 movement *= speed * 1.25f * Time.deltaTime;
                 transform.position = transform.position + movement;
+                transform.rotation = Quaternion.LookRotation(movement);
             }
             else
             {
@@ -99,8 +103,10 @@ public class Mummy : MonoBehaviour
                 movement.Normalize();
                 movement *= speed * 0.75f * Time.deltaTime;
                 transform.position = transform.position + movement;
-
+                transform.rotation = Quaternion.LookRotation(movement);
             }
+
+            animation_controller.SetInteger("state", 1);
         }        
         
     }
