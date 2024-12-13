@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using Cinemachine;
 
 public class BlakeMovement:MonoBehaviour
 {
-    public Camera Camera;
-    public Quaternion targetRotation;
     public float velocity_forward = 0f;
+    public GameObject FollowTarget;
     public Vector3 movement_direction;
     private Animator animation_controller;
     private CharacterController character_controller;
@@ -18,6 +17,8 @@ public class BlakeMovement:MonoBehaviour
     public float jumpTarget = 10f;
     public float gravity = 25.0f;
     public float speed = 1f;
+    public bool isRotatingLeft = false;
+    public bool isRotatingRight = false;
 
     // Start is called before the first frame update
     void Start()
@@ -40,61 +41,87 @@ public class BlakeMovement:MonoBehaviour
         {
             if (Input.GetKey(KeyCode.W))
             {
-                transform.rotation = Camera.transform.rotation;
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
                     if (Input.GetKey(KeyCode.Space))
                     {
-                        // Jump
-                        if (transform.position.y == 0f)
-                        {
-                            moveDirection.y += 10f;
-                            animation_controller.Play("jump start");
-                        }
+                        moveDirection.y += 10f;
+                        animation_controller.Play("jump start");
                     }
                     else
                     {
-                        // Sprint forwards
-                        moveDirection = transform.forward * Input.GetAxis("Vertical") * (speed * 5f);
+                        // Sprint
+                        moveDirection = transform.forward * Input.GetAxis("Vertical") * speed * 5f;
                         animation_controller.SetInteger("state", 2);
                     }
                 }
                 else
                 {
-                    // Walk forwards
+                    // Walk
                     moveDirection = transform.forward * Input.GetAxis("Vertical") * speed;
                     animation_controller.SetInteger("state", 1);
                 }
             }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                // Walk backwards
+                moveDirection = transform.forward * Input.GetAxis("Vertical") * speed;
+                animation_controller.SetInteger("state", 6);
+            }
+            else if (Input.GetKey(KeyCode.A))
+            {
+                // Walk left
+                moveDirection = transform.right * Input.GetAxis("Horizontal") * speed;
+                animation_controller.SetInteger("state", 5);
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                // Walk right
+                moveDirection = transform.right * Input.GetAxis("Horizontal") * speed;
+                animation_controller.SetInteger("state", 4);
+            }
             else
             {
-                // Stop moving
-                moveDirection = transform.forward * Input.GetAxis("Vertical") * (speed * 5f);
+                moveDirection = Vector3.Slerp(moveDirection, Vector3.zero, 2f * Time.deltaTime);
                 animation_controller.SetInteger("state", 0);
             }
         }
-
+        Debug.Log(animation_controller.GetInteger("state"));
         // Handle the rotation of the character
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            Camera.transform.RotateAround(transform.position, Vector3.up, -100f * Time.deltaTime);
+            isRotatingLeft = true;
         }
-        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        if (Input.GetKeyUp(KeyCode.LeftArrow))
         {
-            Camera.transform.RotateAround(transform.position, Vector3.up, 100f * Time.deltaTime);
+            isRotatingLeft = false;
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            isRotatingRight = true;
+        }
+        if (Input.GetKeyUp(KeyCode.RightArrow))
+        {
+            isRotatingRight = false;
+        }
+        if (isRotatingLeft)
+        {
+            transform.Rotate(0, -100f * Time.deltaTime, 0);
+        }
+        if (isRotatingRight)
+        {
+            transform.Rotate(0, 100f * Time.deltaTime, 0);
         }
 
         // Handle movement of character and camera follow
         character_controller.Move(moveDirection * Time.deltaTime);
-        Camera.transform.position = Camera.transform.position + moveDirection * Time.deltaTime;
-        if (transform.position.y > 0f)
+        if (transform.position.y > -1.95f)
         {
             moveDirection.y -= gravity * Time.deltaTime;
         }
-        if (transform.position.y < 0f || Camera.transform.position.y < 1.68f)
+        if (transform.position.y < -1.95f)
         {
-            transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
-            Camera.transform.position = new Vector3(Camera.transform.position.x, 1.68f, Camera.transform.position.z);
+            transform.position = new Vector3(transform.position.x, -1.95f, transform.position.z);
         }
     }
 }
