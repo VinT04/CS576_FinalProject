@@ -26,12 +26,7 @@ public class Mummy : MonoBehaviour
     void Update()
     {
         // Todo
-        // Two states - wandering or chasing
-        // Wandering - choose random point or roam in general direction of player
-        // Chasing - Player is target
         // Need to have mummy animations along with these actions
-        // Maybe use raycast, if it hits player directly then just make player target?
-        // So first check if raycast hits??
 
         RaycastHit hit;
         Vector3 dir = (player.transform.position - transform.position);
