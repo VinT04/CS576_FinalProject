@@ -86,7 +86,7 @@ public class BlakeMovement:MonoBehaviour
                 animation_controller.SetInteger("state", 0);
             }
         }
-        Debug.Log(animation_controller.GetInteger("state"));
+        //Debug.Log(animation_controller.GetInteger("state"));
         // Handle the rotation of the character
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
