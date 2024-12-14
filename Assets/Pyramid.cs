@@ -60,8 +60,6 @@ public class Pyramid : MonoBehaviour
         {
             GameObject.Find("Canvas-Temp").SetActive(false);
         }
-
-
     }
 
     // Update is called once per frame
@@ -290,7 +288,7 @@ public class Pyramid : MonoBehaviour
                     continue;
 
                 float y = bounds.min[1];
-                centers[w, l] = (x + 0.75f, z + 0.75f);
+                centers[w, l] = (x + 1f, z + 1f);
 
                 if (map[w, l] == CellType.WALL)
                 {

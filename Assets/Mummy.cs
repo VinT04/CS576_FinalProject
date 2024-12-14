@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Mummy : MonoBehaviour
 {
@@ -79,7 +77,8 @@ public class Mummy : MonoBehaviour
             (float, float) targetPoint = pyramid.centers[curCell.Item1, curCell.Item2]; //gridToSpace(curCell.Item1, curCell.Item2);
             if (dist <= radius)
             {
-                // If within this radius, trigger audio cue for player and have it at slightly faster speed?
+                // If within this radius, trigger audio cue for player and have it at slightly faster speed
+                // Need bool variable so audio is only placed once, reset after certain cooldown
                 // triggerAudio()
                 Vector3 target = new Vector3(targetPoint.Item1, 0, targetPoint.Item2);
                 Vector3 movement = target - transform.position;
@@ -102,14 +101,16 @@ public class Mummy : MonoBehaviour
             }
             animation_controller.SetInteger("state", 1);
         }
+
+        // Fix y position at 0.75f
         Vector3 curPos = transform.position;
         curPos.y = 0.75f;
         transform.position = curPos;
-
     }
 
     public void upgradeDifficult()
     {
+        // Cal this each time puzzle is solved by player
         speed += 2;
         radius += 5;
     }
@@ -118,10 +119,10 @@ public class Mummy : MonoBehaviour
     {
         if (collision.gameObject == player)
         {
-            // Health or game should end?
+            // Once mummy hits player, game is over
             Debug.Log("Game Over!");
             Destroy(gameObject);
-            // Call endScreen
+            // Call end screen in UI for user to play game or restart
         }
     }
 
