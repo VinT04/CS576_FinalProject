@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 enum CellType
@@ -15,7 +17,7 @@ enum CellType
     R4 = 7,
     R5 = 8,
 }
-public class Pyramid:MonoBehaviour
+public class Pyramid : MonoBehaviour
 {
     // Start is called before the first frame update
 
@@ -30,6 +32,8 @@ public class Pyramid:MonoBehaviour
     internal CellType[,] map;
     internal Bounds bounds;
     internal float wallHeight;
+
+    public RawImage minimap_image;
 
 
     void Start()
@@ -51,6 +55,12 @@ public class Pyramid:MonoBehaviour
         initHallway(map);
         initRooms(map);
         drawMap();
+
+        // setup minimap
+        minimap_image = GameObject.Find("Minimap Image").GetComponent<RawImage>();
+        if (minimap_image != null) Debug.Log("found canvas!");
+        minimap_image.texture = Resources.FindObjectsOfTypeAll<RenderTexture>()
+            .FirstOrDefault(rt => rt.name == "Indoor Texture");
 
 
     }
