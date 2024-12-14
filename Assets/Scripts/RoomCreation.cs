@@ -33,7 +33,8 @@ public class RoomCreation : MonoBehaviour
                 }
         }
         map[length/2,0] = CellType.DOOR;
-        map[length/2,width-1] = CellType.EXIT;
+        map[length/2,width-1] = CellType.DOOR;
+        map[4,7] = CellType.DOORMAT;
         map[length/2,width/2] = CellType.PEDESTAL;
 
         drawMap();
@@ -71,23 +72,20 @@ public class RoomCreation : MonoBehaviour
                         collider = obj.AddComponent<BoxCollider>();
                     }
                 }
-                else if (map[w, l] == CellType.EXIT)
+                else if (map[w, l] == CellType.DOORMAT)
                 {
-                    GameObject obj = Instantiate(doorPrefab);
-                    obj.name = "EXIT";
-                    obj.transform.localScale = new Vector3(bounds.size[0] / (float)width, wallHeight / 2, bounds.size[2] / (float)length);
+                    GameObject obj = new GameObject("DOORMAT"); // Empty object to handle entering rooms
+                    
                     obj.transform.position = new Vector3(x + 0.5f, y, z + 0.5f);
+                    obj.transform.parent = transform;
 
-                    BoxCollider collider = obj.GetComponent<BoxCollider>();
-                    if (!collider)
-                    {
-                        collider = obj.AddComponent<BoxCollider>();
-                    }
-                    collider.isTrigger = true; // Make it a trigger collider
+                    BoxCollider collider = obj.AddComponent<BoxCollider>();
+                    
+                    collider.isTrigger = true; 
+                    collider.size = new Vector3(bounds.size[0] / (float)width, wallHeight / 2, bounds.size[2] / (float)length);
 
-                    obj.AddComponent<DoorInteraction>(); // Attach custom script
+                    obj.AddComponent<RoomExit>(); // Attach custom script
                 }
-
                 else if (map[w, l] == CellType.DOOR)
                 {
                     GameObject obj = Instantiate(doorPrefab);

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 enum CellType
 {
@@ -18,6 +18,7 @@ enum CellType
     ENTRANCE = 10,
     PEDESTAL = 11,
     DOORMAT = 12,
+    ANKH_DOORMAT = 13,
 }
 public class Pyramid:MonoBehaviour
 {
@@ -35,7 +36,7 @@ public class Pyramid:MonoBehaviour
     internal CellType[,] map;
     internal Bounds bounds;
     internal float wallHeight;
-
+    private Dictionary<int, Vector3> roomTileLocations;
 
     void Start()
     {
@@ -62,7 +63,83 @@ public class Pyramid:MonoBehaviour
             wallPrefab.AddComponent<BoxCollider>();
         }
 
+        // Get the room index
+        //int roomIndex = PlayerPrefs.GetInt("RoomIndex", 1);
+
+        callMove();
+
     }
+
+    // function for teleporting player
+    void moveToTile(int roomNumber)
+    {
+        // Define a dictionary to map room numbers to their corresponding tile grid coordinates
+        Dictionary<int, (int x, int z)> tileCoords = new Dictionary<int, (int x, int z)>
+        {
+            {0 , (12, 1)},
+            { 1, (4, 11) }, // Room 1
+            { 2, (4, 20) }, // Room 2
+            { 4, (12, 19) }, // Room 4 -- these got switched somehow when creating rooms, doesn't matter though
+            { 3, (19, 13) }, // Room 3
+            { 5, (20, 2) }, // Room 5
+            { 6, (10, 12) }  // Room 6
+        };
+
+        // Check if the dictionary contains the given room number
+        if (tileCoords.TryGetValue(roomNumber, out (int x, int z) tile))
+        {
+            // Calculate the center of the tile
+            float tileSize = 2.0f; // Replace with your tile size if it's not 1
+            //Vector3 tileCenter = new Vector3(tile.x * tileSize + tileSize / 2 + bounds.min[0], 0, tile.z * tileSize + tileSize / 2 + bounds.min[0]);
+            Debug.Log($"x is {tile.x} z is {tile.z}");
+            Vector3 tileCenter = GetTileCenter(tile.x, tile.z);
+            // Find the player GameObject
+            GameObject player = GameObject.FindWithTag("Player");
+            if (player != null)
+            {
+                // Move the player to the tile center
+                player.transform.position = tileCenter;
+                Debug.Log($"Player moved to tile center at {tileCenter} for room {roomNumber}");
+                while (Vector3.Distance(player.transform.position, tileCenter) > 0.1f)
+                {
+                        player.transform.position = tileCenter;
+                }
+            }
+            else
+            {
+                Debug.LogError("Player GameObject not found! Ensure the player is tagged 'Player'.");
+            }
+        }
+        else
+        {
+            Debug.LogError($"No tile coordinates found for room number {roomNumber}");
+        }
+        Debug.Log($"moved player to {player.transform.position}");
+    }
+
+    // helper for returning center of tile
+    Vector3 GetTileCenter(int w, int l)
+    {
+        // Ensure the tile indices are within the map bounds
+        if (w < 0 || w >= width || l < 0 || l >= length)
+        {
+            Debug.LogError($"Tile indices out of bounds: w={w}, l={l}");
+            return Vector3.zero; // Return a default value
+        }
+
+        // Tile dimensions
+        float tileWidth = bounds.size[0] / (float)width;
+        float tileLength = bounds.size[2] / (float)length;
+
+        // Calculate the center of the tile
+        float x = bounds.min[0] + (tileWidth * w) + (tileWidth / 2);
+        float z = bounds.min[2] + (tileLength * l) + (tileLength / 2);
+        float y = bounds.min[1]; // Assuming all tiles are at the same height
+
+        return new Vector3(x, y, z);
+    }
+
+
 
     // Update is called once per frame
     void Update()
@@ -244,7 +321,8 @@ public class Pyramid:MonoBehaviour
         grid[5, 21] = CellType.R2;
         grid[5, 22] = CellType.R2;
 
-        grid[4, 20] = CellType.EXIT;
+        grid[4, 21] = CellType.EXIT; // Moved to 4,21 from 4,20 to open hall space
+        grid[4, 20] = CellType.FLOOR;
         grid[5, 23] = CellType.DOOR;
         grid[6, 23] = CellType.DOORMAT; // R2 doormat
 
@@ -253,7 +331,8 @@ public class Pyramid:MonoBehaviour
         grid[14, 19] = CellType.R3;
         grid[14, 20] = CellType.R3;
 
-        grid[12, 19] = CellType.EXIT;
+        grid[13, 19] = CellType.EXIT; // Moved to 13,19 from 12,19 to open hall space
+        grid[12, 19] = CellType.FLOOR;
         grid[15, 20] = CellType.DOOR;
         grid[16, 20] = CellType.DOORMAT; // R3 doormat
 
@@ -273,7 +352,8 @@ public class Pyramid:MonoBehaviour
 
         grid[18, 4] = CellType.DOORMAT; // R5 doormat
         grid[18, 3] = CellType.DOOR;
-        grid[20, 2] = CellType.EXIT;
+        grid[19, 2] = CellType.EXIT; // Moved to 19,2 from 20,2 to open hall space
+        grid[20,2] = CellType.FLOOR;
 
         grid[12,0] = CellType.ENTRANCE;
 
@@ -288,13 +368,14 @@ public class Pyramid:MonoBehaviour
         // Ankh-room:
         grid[10, 12] = CellType.EXIT;
         grid[12, 14] = CellType.DOOR;
-        grid[12, 15] = CellType.DOORMAT; // AR doormat
+        grid[12, 15] = CellType.ANKH_DOORMAT; // AR doormat
 
     }
 
     void drawMap()
     {
         Debug.Log(1e-6f);
+        int roomID = 1;
         int w = 0;
         for (float x = bounds.min[0]; x < bounds.max[0]; x += bounds.size[0] / (float)width, w++)
         {
@@ -362,6 +443,7 @@ public class Pyramid:MonoBehaviour
                 else if (map[w, l] == CellType.DOORMAT)
                 {
                     GameObject obj = new GameObject("DOORMAT"); // Empty object to handle entering rooms
+
                     obj.name = "DOORMAT";
                     
                     obj.transform.position = new Vector3(x + 0.5f, y, z + 0.5f);
@@ -372,9 +454,55 @@ public class Pyramid:MonoBehaviour
                     collider.isTrigger = true; 
                     collider.size = new Vector3(bounds.size[0] / (float)width, wallHeight / 2, bounds.size[2] / (float)length);
 
-                    obj.AddComponent<DoorInteraction>(); // For door handling stuff
+                    //obj.AddComponent<DoorInteraction>(); // For door handling stuff
+                    DoorInteraction doorInteraction = obj.AddComponent<DoorInteraction>();
+                    doorInteraction.roomIndex = roomID++; // Assign the specific room index dynamically
+                }
+                else if (map[w, l] == CellType.ANKH_DOORMAT)
+                {
+                    GameObject obj = new GameObject("ANKH_DOORMAT"); // Empty object to handle entering rooms
+
+                    obj.name = "ANKH_DOORMAT";
+                    
+                    obj.transform.position = new Vector3(x + 0.5f, y, z + 0.5f);
+                    obj.transform.parent = transform;
+
+                    BoxCollider collider = obj.AddComponent<BoxCollider>();
+                    
+                    collider.isTrigger = true; 
+                    collider.size = new Vector3(bounds.size[0] / (float)width, wallHeight / 2, bounds.size[2] / (float)length);
+
+                    //obj.AddComponent<DoorInteraction>(); // For door handling stuff
+                    DoorInteraction doorInteraction = obj.AddComponent<DoorInteraction>();
+                    doorInteraction.roomIndex = 6; // Assign the specific room index dynamically
                 }
             }
         }
+        //callMove();
+    }
+
+    void callMove()
+    {
+        StartCoroutine(FadeAndMove());
+    }
+
+    private IEnumerator FadeAndMove()
+    {
+        // Fade in the black screen using InteractionTextManager
+        InteractionTextManager.Instance.FadeInLoadingScreen(1.0f, "Loading ...");
+
+        // Wait for the fade-in to complete
+        //yield return new WaitForSeconds(1.0f);
+
+        // Perform the teleportation
+        int roomIndex = PlayerPrefs.GetInt("RoomIndex", 1);
+        moveToTile(roomIndex);
+        PlayerPrefs.SetInt("RoomIndex", 0); // Reset room index for the next scene
+
+        // Wait for a short moment after teleporting (optional)
+        yield return new WaitForSeconds(0.5f);
+
+        // Fade out the black screen using InteractionTextManager
+        InteractionTextManager.Instance.FadeOutLoadingScreen(1.0f);
     }
 }

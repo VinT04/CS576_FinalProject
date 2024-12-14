@@ -25,7 +25,7 @@ public class DoorInteraction : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Interaction Text object not found in the scene.");
+            //Debug.LogError("Interaction Text object not found in the scene.");
         }
     }
 
@@ -36,13 +36,9 @@ public class DoorInteraction : MonoBehaviour
             isPlayerNear = true;
             player = other.gameObject;
             Debug.Log($"Player is near door to Room {roomIndex}. Press 'F' to enter.");
-        }
-
-        // Display the interaction text
-        if (interactionText != null)
-        {
-            interactionText.text = $"Press 'F' to enter room";
-            interactionText.gameObject.SetActive(true);
+            
+            if (roomIndex == 6) InteractionTextManager.Instance?.ShowText($"Press 'F' to enter tomb");
+            else InteractionTextManager.Instance?.ShowText($"Press 'F' to enter room");
         }
     }
 
@@ -52,14 +48,10 @@ public class DoorInteraction : MonoBehaviour
         {
             isPlayerNear = false;
             player = null;
-            Debug.Log("Player left the door area.");
-        }
-        // Hide the interaction text
-        if (interactionText != null)
-        {
-            interactionText.gameObject.SetActive(false);
+            InteractionTextManager.Instance?.HideText();
         }
     }
+
 
     private void Update()
     {
@@ -72,20 +64,15 @@ public class DoorInteraction : MonoBehaviour
 
     private IEnumerator EnterRoom()
     {
-        // Save the player's current position for returning later
-        Vector3 exitDoorPosition = transform.position;
-
         // Save the room index and exit door position to PlayerPrefs
         PlayerPrefs.SetInt("RoomIndex", roomIndex);
-        PlayerPrefs.SetFloat("ExitDoorX", exitDoorPosition.x);
-        PlayerPrefs.SetFloat("ExitDoorY", exitDoorPosition.y);
-        PlayerPrefs.SetFloat("ExitDoorZ", exitDoorPosition.z);
         PlayerPrefs.Save();
 
         // Load the room scene
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(roomSceneName);
         while (!asyncLoad.isDone)
         {
+            InteractionTextManager.Instance?.HideText();
             yield return null;
         }
 

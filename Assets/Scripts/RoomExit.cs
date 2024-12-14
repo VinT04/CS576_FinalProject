@@ -22,22 +22,17 @@ public class RoomExit : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            isPlayerNear = true;
-            player = other.gameObject;
-            Debug.Log("Player is near the exit. Press 'F' to leave.");
-        }
+        isPlayerNear = true;
+        player = other.gameObject;
+        Debug.Log("ran");
+        InteractionTextManager.Instance?.ShowText($"Press 'F' to exit room");
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            isPlayerNear = false;
-            player = null;
-            Debug.Log("Player left the exit area.");
-        }
+        isPlayerNear = false;
+        player = null;
+        InteractionTextManager.Instance?.HideText();
     }
 
     private void Update()
@@ -51,15 +46,15 @@ public class RoomExit : MonoBehaviour
 
     private IEnumerator ExitRoom()
     {
+        // Retrieve the room index
+        int roomIndex = PlayerPrefs.GetInt("RoomIndex", 1);
+        Debug.Log($"Leaving Room {roomIndex}");
         // Load the maze scene
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(mazeSceneName);
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
-
-        // Retrieve the room index
-        int roomIndex = PlayerPrefs.GetInt("RoomIndex", 1);
 
         // Get the corresponding exit location
         Vector3 exitLocation = roomExitLocations.ContainsKey(roomIndex)
