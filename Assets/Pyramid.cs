@@ -26,13 +26,12 @@ public class Pyramid : MonoBehaviour
     public GameObject player;
     public GameObject wallPrefab;
     public GameObject doorPrefab;
-    public GameObject healthBar;
 
     // Add later buttons for intro/try again as needed
     internal CellType[,] map;
     internal Bounds bounds;
     internal float wallHeight;
-
+    internal (float, float)[,] centers;
     public RawImage minimap_image;
 
 
@@ -41,17 +40,12 @@ public class Pyramid : MonoBehaviour
         wallHeight = transform.localScale.z;
         bounds = GetComponent<Collider>().bounds;
         map = new CellType[width, length];
+        centers = new (float, float)[width, length];
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < length; j++)
                 map[i, j] = CellType.WALL;
         }
-        // Make according to map
-        // Puzzle rooms are 1 x 1
-        // 5 Puzzle rooms, each with their own challenge - can generate later
-        // Ankh room is 2 x 2
-        // Walls and hallway are like normal
-        // Import prefabs for walls, floors, rooms, etc.
         initHallway(map);
         initRooms(map);
         drawMap();
@@ -286,7 +280,6 @@ public class Pyramid : MonoBehaviour
 
     void drawMap()
     {
-        Debug.Log(1e-6f);
         int w = 0;
         for (float x = bounds.min[0]; x < bounds.max[0]; x += bounds.size[0] / (float)width, w++)
         {
@@ -297,6 +290,7 @@ public class Pyramid : MonoBehaviour
                     continue;
 
                 float y = bounds.min[1];
+                centers[w, l] = (x + 0.75f, z + 0.75f);
 
                 if (map[w, l] == CellType.WALL)
                 {
