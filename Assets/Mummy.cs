@@ -15,9 +15,6 @@ public class Mummy : MonoBehaviour
     private Animator animation_controller;
     void Start()
     {
-        // Use similar logic to virus from project 5
-        // If within radius, then follow player
-        // otherwise have some type of random roaming technique?
         radius = 10f;
         speed = 1f;
         pyramid = plane.GetComponent<Pyramid>();
@@ -75,7 +72,6 @@ public class Mummy : MonoBehaviour
             }
 
             // Can find full path saved in dictionary
-            // Now, we know path through maze toward player, so we just make it move toward next node in path?
             (int, int) curCell = playerPosition;
             while (d.ContainsKey(curCell) && d[curCell] != mummyPosition) curCell = d[curCell];
 
@@ -131,8 +127,6 @@ public class Mummy : MonoBehaviour
 
     private (int, int) spaceToGrid (float x, float z)
     {
-        //x -= 0.5f;
-        //z -= 0.5f;
         float xStep = pyramid.bounds.size[0] / (float)pyramid.width;
         float zStep = pyramid.bounds.size[2] / (float)pyramid.length;
         
