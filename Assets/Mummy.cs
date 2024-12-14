@@ -27,9 +27,6 @@ public class Mummy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Todo
-        // Make mummy rotate in direction
-
         RaycastHit hit;
         Vector3 dir = (player.transform.position - transform.position);
         dir.Normalize();
@@ -68,7 +65,7 @@ public class Mummy : MonoBehaviour
                 for (int i = 0; i < directions.Count; i++)
                 {
                     (int, int) newPos = (cur.obj.Item1 + directions[i].Item1, cur.obj.Item2 + directions[i].Item2);
-                    if (0 <= newPos.Item1 && newPos.Item1 < pyramid.width && 0 <= newPos.Item2 && newPos.Item2 < pyramid.length)
+                    if (0 <= newPos.Item1 && newPos.Item1 < pyramid.width && 0 <= newPos.Item2 && newPos.Item2 < pyramid.length && !d.ContainsKey(newPos))
                     {
                         d.Add(newPos, cur.obj);
                         int add = pyramid.map[newPos.Item1, newPos.Item2] == CellType.FlOOR ? 0 : 100;
@@ -83,13 +80,14 @@ public class Mummy : MonoBehaviour
             while (d.ContainsKey(curCell) && d[curCell] != mummyPosition) curCell = d[curCell];
 
             // curCell will now be second node on path from mummyPosition to playerPosition
-            (float, float) targetPoint = gridToSpace(curCell.Item1, curCell.Item2);
+            (float, float) targetPoint = pyramid.centers[curCell.Item1, curCell.Item2]; //gridToSpace(curCell.Item1, curCell.Item2);
             if (dist <= radius)
             {
                 // If within this radius, trigger audio cue for player and have it at slightly faster speed?
                 // triggerAudio()
                 Vector3 target = new Vector3(targetPoint.Item1, 0, targetPoint.Item2);
                 Vector3 movement = target - transform.position;
+                movement.y = 0f;
                 movement.Normalize();
                 movement *= speed * 1.25f * Time.deltaTime;
                 transform.position = transform.position + movement;
@@ -100,14 +98,17 @@ public class Mummy : MonoBehaviour
                 // Roam in general direction found to player, but at more passive speed
                 Vector3 target = new Vector3(targetPoint.Item1, 0, targetPoint.Item2);
                 Vector3 movement = target - transform.position;
+                movement.y = 0f;
                 movement.Normalize();
                 movement *= speed * 0.75f * Time.deltaTime;
                 transform.position = transform.position + movement;
                 transform.rotation = Quaternion.LookRotation(movement);
             }
-
             animation_controller.SetInteger("state", 1);
-        }        
+        }  
+        Vector3 curPos = transform.position;
+        curPos.y = 0.75f;
+        transform.position = curPos;
         
     }
 
@@ -119,7 +120,6 @@ public class Mummy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.name);
         if (collision.gameObject.name == "The Adventurer Blake Variant")
         {
             // Health or game should end?
@@ -131,12 +131,12 @@ public class Mummy : MonoBehaviour
 
     private (int, int) spaceToGrid (float x, float z)
     {
-        x -= 0.5f;
-        z -= 0.5f;
+        //x -= 0.5f;
+        //z -= 0.5f;
         float xStep = pyramid.bounds.size[0] / (float)pyramid.width;
         float zStep = pyramid.bounds.size[2] / (float)pyramid.length;
-
-        return ( (int) (x / xStep), (int) (z / zStep));
+        
+        return ( (int) (Mathf.Round((x - pyramid.bounds.min[0]) / xStep)), (int) (Mathf.Round((z - pyramid.bounds.min[2]) / zStep)));
 
     }
 
@@ -145,7 +145,7 @@ public class Mummy : MonoBehaviour
         float xStep = pyramid.bounds.size[0] / (float)pyramid.width;
         float zStep = pyramid.bounds.size[2] / (float)pyramid.length;
 
-        return (xStep * i + 0.5f, zStep * j + 0.5f);
+        return (xStep * i + pyramid.bounds.min[0], zStep * j + pyramid.bounds.min[2]);
     }
 }
 

@@ -30,6 +30,7 @@ public class Pyramid:MonoBehaviour
     internal CellType[,] map;
     internal Bounds bounds;
     internal float wallHeight;
+    internal (float, float)[,] centers;
 
 
     void Start()
@@ -37,17 +38,13 @@ public class Pyramid:MonoBehaviour
         wallHeight = transform.localScale.z;
         bounds = GetComponent<Collider>().bounds;
         map = new CellType[width, length];
+        centers = new (float, float)[width, length];
+
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < length; j++)
                 map[i, j] = CellType.WALL;
         }
-        // Make according to map
-        // Puzzle rooms are 1 x 1
-        // 5 Puzzle rooms, each with their own challenge - can generate later
-        // Ankh room is 2 x 2
-        // Walls and hallway are like normal
-        // Import prefabs for walls, floors, rooms, etc.
         initHallway(map);
         initRooms(map);
         drawMap();
@@ -271,17 +268,19 @@ public class Pyramid:MonoBehaviour
 
     void drawMap()
     {
-        Debug.Log(1e-6f);
         int w = 0;
-        for (float x = bounds.min[0]; x < bounds.max[0]; x += bounds.size[0] / (float)width, w++)
+        float xStep = bounds.size[0] / (float)width;
+        float zStep = bounds.size[2] / (float)length;
+        for (float x = bounds.min[0]; x < bounds.max[0]; x += xStep, w++)
         {
             int l = 0;
-            for (float z = bounds.min[2]; z < bounds.max[2]; z += bounds.size[2] / (float)length, l++)
+            for (float z = bounds.min[2]; z < bounds.max[2]; z += zStep, l++)
             {
                 if ((w >= width) || (l >= width))
                     continue;
 
                 float y = bounds.min[1];
+                centers[w, l] = (x + 0.5f, z + 0.5f);
 
                 if (map[w, l] == CellType.WALL)
                 {
