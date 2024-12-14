@@ -31,7 +31,7 @@ public class Mummy : MonoBehaviour
             if (hit.collider.gameObject == player || hit.collider.gameObject.transform.parent == player.transform)
             {
                 // Chase player directly if it is in sight of mummy
-                Debug.Log("Chase directly");
+                //Debug.Log("Chase directly");
                 direct = true;
                 dir *= speed * 1.5f * Time.deltaTime;
                 dir.y = 0;
@@ -42,7 +42,7 @@ public class Mummy : MonoBehaviour
 
         if (!direct)
         {
-            Debug.Log("Chase heuristically");
+            //Debug.Log("Chase heuristically");
             float dist = Vector3.Magnitude(player.transform.position - transform.position);
             PriorityQueue<(int, int)> q = new PriorityQueue<(int, int)>();
 
@@ -117,7 +117,7 @@ public class Mummy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject == player)
+        if (collision.gameObject == player || collision.gameObject.transform.parent == player.transform)
         {
             // Once mummy hits player, game is over
             Debug.Log("Game Over!");
