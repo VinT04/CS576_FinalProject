@@ -12,7 +12,9 @@ public class DoorInteraction : MonoBehaviour
     public string roomSceneName = "Room"; // Base room scene name
     public int roomIndex; // Room identifier (e.g., 1 to 5)
     public string mazeSceneName = "Intro_maze";
-    public Text interactionText; // Reference to the TextMeshProUGUI element
+    public Text interactionText; // text showing on bottom
+    public int keysRequired = 5;
+
 
     private void Start()
     {
@@ -58,7 +60,23 @@ public class DoorInteraction : MonoBehaviour
         if (isPlayerNear && Input.GetKeyDown(KeyCode.F))
         {
             Debug.Log($"Entering Room {roomIndex}...");
-            StartCoroutine(EnterRoom());
+
+            if (roomIndex == 6)
+            {
+                int keysCollected = PlayerPrefs.GetInt("KeysCollected", 0);
+                if (keysCollected >= keysRequired)
+                {
+                    StartCoroutine(EnterRoom());
+
+                }
+                else
+                {
+                    InteractionTextManager.Instance.ShowText($"You need {keysRequired - keysCollected} more keys to open this door.");
+                }
+            }
+            else {
+                StartCoroutine(EnterRoom());
+            }
         }
     }
 

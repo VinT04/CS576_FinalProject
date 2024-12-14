@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1489.3334
     height: 897.3334
   m_ShowMode: 4
-  m_Title: Console
+  m_Title: Game
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -192,8 +192,8 @@ MonoBehaviour:
     y: 0
     width: 214
     height: 500.66666
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -273,8 +273,8 @@ MonoBehaviour:
     y: 0
     width: 423.33337
     height: 847.3333
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -967,7 +967,7 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: 0.399826, y: -0.4166131, z: 0.21119963, w: 0.7886649}
     speed: 2
-    m_Value: {x: -0.399826, y: 0.4166131, z: -0.21119963, w: -0.7886648}
+    m_Value: {x: 0.39982104, y: -0.41660795, z: 0.211197, w: 0.7886551}
   m_Size:
     m_Target: 111.535645
     speed: 2
