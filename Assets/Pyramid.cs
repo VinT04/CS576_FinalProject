@@ -62,6 +62,11 @@ public class Pyramid : MonoBehaviour
         minimap_image.texture = Resources.FindObjectsOfTypeAll<RenderTexture>()
             .FirstOrDefault(rt => rt.name == "Indoor Texture");
 
+        if (GameObject.Find("Canvas") != null)
+        {
+            GameObject.Find("Canvas-Temp").SetActive(false);
+        }
+
 
     }
 
