@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 enum CellType
 {
@@ -64,10 +65,9 @@ public class Pyramid:MonoBehaviour
         }
 
         // Get the room index
-        //int roomIndex = PlayerPrefs.GetInt("RoomIndex", 1);
+        int roomIndex = PlayerPrefs.GetInt("RoomIndex", 1);
 
         callMove();
-
     }
 
     // function for teleporting player
@@ -82,16 +82,13 @@ public class Pyramid:MonoBehaviour
             { 4, (12, 19) }, // Room 4 -- these got switched somehow when creating rooms, doesn't matter though
             { 3, (19, 13) }, // Room 3
             { 5, (20, 2) }, // Room 5
-            { 6, (10, 12) }  // Room 6
+            { 6, (9, 12) }  // Room 6
         };
 
         // Check if the dictionary contains the given room number
         if (tileCoords.TryGetValue(roomNumber, out (int x, int z) tile))
         {
             // Calculate the center of the tile
-            float tileSize = 2.0f; // Replace with your tile size if it's not 1
-            //Vector3 tileCenter = new Vector3(tile.x * tileSize + tileSize / 2 + bounds.min[0], 0, tile.z * tileSize + tileSize / 2 + bounds.min[0]);
-            Debug.Log($"x is {tile.x} z is {tile.z}");
             Vector3 tileCenter = GetTileCenter(tile.x, tile.z);
             // Find the player GameObject
             GameObject player = GameObject.FindWithTag("Player");
@@ -492,17 +489,18 @@ public class Pyramid:MonoBehaviour
         InteractionTextManager.Instance.FadeInLoadingScreen(1.0f, "Loading ...");
 
         // Wait for the fade-in to complete
-        //yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.0f);
 
         // Perform the teleportation
         int roomIndex = PlayerPrefs.GetInt("RoomIndex", 1);
         moveToTile(roomIndex);
-        PlayerPrefs.SetInt("RoomIndex", 0); // Reset room index for the next scene
+        //PlayerPrefs.SetInt("RoomIndex", 0); // Reset room index for the next scene
 
         // Wait for a short moment after teleporting (optional)
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.0f);
 
         // Fade out the black screen using InteractionTextManager
         InteractionTextManager.Instance.FadeOutLoadingScreen(1.0f);
+        PlayerPrefs.SetInt("RoomIndex", 0);
     }
 }

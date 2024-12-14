@@ -116,27 +116,6 @@ public class BlakeMovement:MonoBehaviour
 
     }
 
-    public void teleport(Vector3 location)
-    {
-        if (character_controller != null)
-        {
-            // Disable the CharacterController temporarily
-            character_controller.enabled = false;
-
-            // Set the new position
-            character_controller.transform.position = location;
-
-            // Re-enable the CharacterController
-            character_controller.enabled = true;
-
-            Debug.Log($"Teleported to: {location}");
-        }
-        else
-        {
-            Debug.LogError("CharacterController is not assigned!");
-        }
-    }
-
 }
 
 
