@@ -50,7 +50,7 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 5.17
   enableVolumetricFog:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   albedo:
     m_OverrideState: 0
@@ -60,7 +60,7 @@ MonoBehaviour:
     m_Value: 0
   depthExtent:
     m_OverrideState: 0
-    m_Value: 14
+    m_Value: 117.67
   denoisingMode:
     m_OverrideState: 0
     m_Value: 0
@@ -151,7 +151,7 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 1
   sphericalMode:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   seaLevel:
     m_OverrideState: 0
@@ -211,7 +211,7 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 1
   spaceRotation:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: {x: 0, y: 0, z: 0}
   colorSaturation:
     m_OverrideState: 0
@@ -253,13 +253,13 @@ MonoBehaviour:
   active: 1
   skyType:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 4
   cloudType:
-    m_OverrideState: 1
-    m_Value: 0
-  skyAmbientMode:
     m_OverrideState: 0
     m_Value: 1
+  skyAmbientMode:
+    m_OverrideState: 1
+    m_Value: 0
   windOrientation:
     m_OverrideState: 0
     m_Value: 0
