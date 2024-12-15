@@ -687,6 +687,7 @@ GameObject:
   - component: {fileID: 175138028}
   - component: {fileID: 175138030}
   - component: {fileID: 175138029}
+  - component: {fileID: 175138031}
   m_Layer: 5
   m_Name: Duration
   m_TagString: Untagged
@@ -733,7 +734,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You lasted X seconds, collecting X/5 scrolls.
+  m_text: 'Total duration: X seconds.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 58a29361d919c4a5b8e17b531c2ecc9b, type: 2}
   m_sharedMaterial: {fileID: 5062160752816807625, guid: 58a29361d919c4a5b8e17b531c2ecc9b, type: 2}
@@ -810,6 +811,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 175138027}
   m_CullTransparentMesh: 1
+--- !u!114 &175138031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175138027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2373c461a05634958a4caa5d0ac43ad1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &191467273
 GameObject:
   m_ObjectHideFlags: 0
