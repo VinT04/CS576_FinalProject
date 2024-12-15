@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class TutorialScroll : MonoBehaviour
 {
@@ -29,6 +30,10 @@ public class TutorialScroll : MonoBehaviour
             scroll_text.text = "Step through the portal, enter the pyramid if you dare, and claim the riches. But be warned of the mummies that lie within!";
             canvas.SetActive(true);
             Destroy(other.gameObject);
+        }
+        else if (other.gameObject.name.Contains("Cylinder.013"))
+        {
+            SceneManager.LoadScene("Intro_outdoor");
         }
     }
 }
