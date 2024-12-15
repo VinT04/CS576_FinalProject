@@ -115,7 +115,7 @@ public class Mummy : MonoBehaviour
         radius += 5;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject == player || collision.gameObject.transform.parent == player.transform)
         {
