@@ -1190,6 +1190,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: d0882da95153541c09fc1451e68b2ec1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ade15d1d7b8274be08937a7595ccf878, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3918,32 +3922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1136c3b4f85a48fcae6475227b3274e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
-  scrollCamera: {fileID: 0}
   tutorial_text: {fileID: 1387732468}
-  popups:
-  - 'Welcome to Tomb of Eternal Pursuit
-
-    Press any key to begin'
-  - Press "w" to move forwards
-  - Press "s" to move backwards
-  - Press "a" to move leftwards
-  - Press "d" to move rightwards
-  - Press the left arrow to look left
-  - Press the right arrow to look right
-  - Press shift while moving forwards to sprint
-  - Press the spacebar while sprinting to jump
-  - 'Use the mini map to check your surroundings
-
-    Press any key to continue'
-  - Now go climb out the crater
-  - You must avoid enemies throughout the journey
-  - 'Avoid being caught by the serpent
-
-    Now find your way to the portal to begin'
-  index: 0
-  timer: 0
-  time_limit: 1
 --- !u!4 &1939323961
 Transform:
   m_ObjectHideFlags: 0
