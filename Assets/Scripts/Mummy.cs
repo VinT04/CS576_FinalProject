@@ -63,7 +63,7 @@ public class Mummy : MonoBehaviour
                     if (0 <= newPos.Item1 && newPos.Item1 < pyramid.width && 0 <= newPos.Item2 && newPos.Item2 < pyramid.length && !d.ContainsKey(newPos))
                     {
                         d.Add(newPos, cur.obj);
-                        int add = pyramid.map[newPos.Item1, newPos.Item2] == CellType.FlOOR ? 0 : 100;
+                        int add = pyramid.map[newPos.Item1, newPos.Item2] == CellType.FLOOR ? 0 : 100;
                         q.Add(newPos, cur.priority + add);
                     }
                 }
