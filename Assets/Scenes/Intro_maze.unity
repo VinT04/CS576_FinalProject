@@ -862,23 +862,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8979413814751736791, guid: ae4a74e4c922549a8b806fe3c6047bca, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.2076489
       objectReference: {fileID: 0}
     - target: {fileID: 8979413814751736791, guid: ae4a74e4c922549a8b806fe3c6047bca, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.2076489
       objectReference: {fileID: 0}
     - target: {fileID: 8979413814751736791, guid: ae4a74e4c922549a8b806fe3c6047bca, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.2076489
       objectReference: {fileID: 0}
     - target: {fileID: 8979413814751736791, guid: ae4a74e4c922549a8b806fe3c6047bca, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 270
+      value: 406
       objectReference: {fileID: 0}
     - target: {fileID: 8979413814751736791, guid: ae4a74e4c922549a8b806fe3c6047bca, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 62.5
+      value: -140
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1372,7 +1372,8 @@ PrefabInstance:
       propertyPath: m_Lens.FarClipPlane
       value: 30
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1561659044197328184, guid: ef6c6eef7f41b694ab3a7540eee9a8b8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3698465444217522275, guid: ef6c6eef7f41b694ab3a7540eee9a8b8, type: 3}
