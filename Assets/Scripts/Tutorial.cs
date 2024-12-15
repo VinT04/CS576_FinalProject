@@ -17,8 +17,7 @@ public class Tutorial : MonoBehaviour
         "Press shift while moving forwards to sprint",
         "Press the spacebar while sprinting to jump",
         "Use the mini map to check your surroundings\nPress any key to continue",
-        "Avoid being caught by the mummy\nPress any key to continue",
-        "Now find your way to the pyramid to begin"
+        "Read the scroll to get your next steps"
     };
     private int index = 0;
     private float timer = 0.0f;
@@ -36,14 +35,14 @@ public class Tutorial : MonoBehaviour
         timer += Time.deltaTime;
 
         bool any = Input.anyKey;
-        bool shift = Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-        bool w = Input.GetKeyDown(KeyCode.W);
-        bool s = Input.GetKeyDown(KeyCode.S);
-        bool a = Input.GetKeyDown(KeyCode.A);
-        bool d = Input.GetKeyDown(KeyCode.D);
-        bool left = Input.GetKeyDown(KeyCode.LeftArrow);
-        bool right = Input.GetKeyDown(KeyCode.RightArrow);
-        bool space = Input.GetKeyDown(KeyCode.Space);
+        bool shift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+        bool w = Input.GetKey(KeyCode.W);
+        bool s = Input.GetKey(KeyCode.S);
+        bool a = Input.GetKey(KeyCode.A);
+        bool d = Input.GetKey(KeyCode.D);
+        bool left = Input.GetKey(KeyCode.LeftArrow);
+        bool right = Input.GetKey(KeyCode.RightArrow);
+        bool space = Input.GetKey(KeyCode.Space);
 
         if (timer > time_limit)
         {
@@ -103,7 +102,7 @@ public class Tutorial : MonoBehaviour
 
     IEnumerator tutorial_runner()
     {
-        bool ctrl = Input.GetKeyDown(KeyCode.C);
+        bool ctrl = Input.GetKey(KeyCode.C);
         bool any = Input.anyKey;
         bool shift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         bool up = Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W);
