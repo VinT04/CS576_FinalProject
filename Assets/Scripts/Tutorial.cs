@@ -8,10 +8,12 @@ public class Tutorial : MonoBehaviour
     public TMP_Text tutorial_text;
     private string[] popups = {
         "Welcome to Tomb of Eternal Pursuit\nPress any key to begin",
-        "Press \"w\" or the up arrow to move forwards",
-        "Press \"s\" or the down arrow to move backward",
-        "Press \"a\" or the left arrow to look left",
-        "Press \"d\" or the right arrow to look right",
+        "Press \"w\" to move forwards",
+        "Press \"s\" to move backward",
+        "Press \"a\" to move leftwards",
+        "Press \"d\" to move rightwards",
+        "Press left arrow to look left",
+        "Press right arrow to look right",
         "Press shift while moving forwards to sprint",
         "Press the spacebar while sprinting to jump",
         "Use the mini map to check your surroundings\nPress any key to continue",
@@ -35,10 +37,12 @@ public class Tutorial : MonoBehaviour
 
         bool any = Input.anyKey;
         bool shift = Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-        bool up = Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W);
-        bool down = Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S);
-        bool left = Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A);
-        bool right = Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D);
+        bool w = Input.GetKeyDown(KeyCode.W);
+        bool s = Input.GetKeyDown(KeyCode.S);
+        bool a = Input.GetKeyDown(KeyCode.A);
+        bool d = Input.GetKeyDown(KeyCode.D);
+        bool left = Input.GetKeyDown(KeyCode.LeftArrow);
+        bool right = Input.GetKeyDown(KeyCode.RightArrow);
         bool space = Input.GetKeyDown(KeyCode.Space);
 
         if (timer > time_limit)
@@ -48,31 +52,39 @@ public class Tutorial : MonoBehaviour
                 next_prompt();
                 time_limit = 5.0f;
             }
-            else if (index == 1 && up)
+            else if (index == 1 && w)
             {
                 next_prompt();
             }
-            else if (index == 2 && down)
+            else if (index == 2 && s)
             {
                 next_prompt();
             }
-            else if (index == 3 && left)
+            else if (index == 3 && a)
             {
                 next_prompt();
             }
-            else if (index == 4 && right)
+            else if (index == 4 && d)
             {
                 next_prompt();
             }
-            else if (index == 5 && up && shift)
+            else if (index == 5 && left)
             {
                 next_prompt();
             }
-            else if (index == 6 && up && shift && space)
+            else if (index == 6 && right)
             {
                 next_prompt();
             }
-            else if (index > 6 && index < 9 && any)
+            else if (index == 7 && w && shift)
+            {
+                next_prompt();
+            }
+            else if (index == 8 && w && shift && space)
+            {
+                next_prompt();
+            }
+            else if (index >= 9 && any)
             {
                 next_prompt();
             }
