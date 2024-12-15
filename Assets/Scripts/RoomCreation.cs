@@ -15,6 +15,9 @@ public class RoomCreation : MonoBehaviour
     internal float wallHeight;
     private int roomIndex;
 
+    //public PuzzleGenerator[] puzzleGenerators; // Array of puzzle generators
+
+
     void Start()
     {
         // Automatically create a room when the game starts
@@ -38,12 +41,26 @@ public class RoomCreation : MonoBehaviour
         map[length/2,width/2] = CellType.PEDESTAL;
 
         drawMap();
+        roomIndex = PlayerPrefs.GetInt("RoomIndex", 1);
+        LoadRoomPuzzle();
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    private void LoadRoomPuzzle()
+    {
+        if (PlayerPrefs.GetInt("RoomIndex", 1) == 1) // Assuming roomIndex 0 is the Hawk Chamber
+        {
+            HawkPuzzleGenerator puzzleGenerator = GetComponent<HawkPuzzleGenerator>();
+            if (puzzleGenerator != null)
+            {
+                puzzleGenerator.GeneratePuzzle(transform);
+            }
+        }
     }
 
     void drawMap()
@@ -99,35 +116,41 @@ public class RoomCreation : MonoBehaviour
                     }
                 }
                 else if (map[w, l] == CellType.PEDESTAL)
-                {
-                    GameObject obj = Instantiate(pedestalPrefab);
-                    obj.name = "PEDESTAL";
-                    obj.transform.localScale = new Vector3(bounds.size[0] / (float)width, wallHeight / 7, bounds.size[2] / (float)length);
-                    obj.transform.position = new Vector3(x + 0.5f, y, z + 0.5f);
-                    obj.transform.rotation = Quaternion.Euler(0, 90, 0);
-
-                    // Add the first BoxCollider for triggering
-                    BoxCollider triggerCollider = obj.GetComponent<BoxCollider>();
-                    if (!triggerCollider)
-                    {
-                        triggerCollider = obj.AddComponent<BoxCollider>();
+                {   
+                    //Debug.Log($"ze room index is {roomIndex} or {PlayerPrefs.GetInt("RoomIndex", 1)}");
+                    if (PlayerPrefs.GetInt("RoomIndex", 1) == 1){
+                        
                     }
-                    triggerCollider.isTrigger = true; // Set as a trigger
-                    triggerCollider.size = new Vector3(bounds.size[0] / (float)width, wallHeight / 2, bounds.size[2] / (float)length * 3/5); // Adjust size as needed
+                    else{
+                        GameObject obj = Instantiate(pedestalPrefab);
+                        obj.name = "PEDESTAL";
+                        obj.transform.localScale = new Vector3(bounds.size[0] / (float)width, wallHeight / 7, bounds.size[2] / (float)length);
+                        obj.transform.position = new Vector3(x + 0.5f, y, z + 0.5f);
+                        obj.transform.rotation = Quaternion.Euler(0, 90, 0);
 
-                    // Create a child GameObject for the second collider
-                    GameObject physicalCollider = new GameObject("PhysicalCollider");
-                    physicalCollider.transform.parent = obj.transform;
-                    physicalCollider.transform.localPosition = Vector3.zero; // Align with parent
-                    physicalCollider.transform.localScale = Vector3.one; // Reset scale
+                        // Add the first BoxCollider for triggering
+                        BoxCollider triggerCollider = obj.GetComponent<BoxCollider>();
+                        if (!triggerCollider)
+                        {
+                            triggerCollider = obj.AddComponent<BoxCollider>();
+                        }
+                        triggerCollider.isTrigger = true; // Set as a trigger
+                        triggerCollider.size = new Vector3(bounds.size[0] / (float)width, wallHeight / 2, bounds.size[2] / (float)length * 3/5); // Adjust size as needed
 
-                    // Add the second BoxCollider for physical collisions
-                    BoxCollider collisionCollider = physicalCollider.AddComponent<BoxCollider>();
-                    collisionCollider.isTrigger = false; // Enable physical collisions
-                    collisionCollider.size = new Vector3(bounds.size[0] / (float)width, wallHeight / 2, bounds.size[2] / (float)length * 3/5); // Adjust size as needed
+                        // Create a child GameObject for the second collider
+                        GameObject physicalCollider = new GameObject("PhysicalCollider");
+                        physicalCollider.transform.parent = obj.transform;
+                        physicalCollider.transform.localPosition = Vector3.zero; // Align with parent
+                        physicalCollider.transform.localScale = Vector3.one; // Reset scale
 
-                    // Attach the custom script
-                    obj.AddComponent<Pedestal>();
+                        // Add the second BoxCollider for physical collisions
+                        BoxCollider collisionCollider = physicalCollider.AddComponent<BoxCollider>();
+                        collisionCollider.isTrigger = false; // Enable physical collisions
+                        collisionCollider.size = new Vector3(bounds.size[0] / (float)width, wallHeight / 2, bounds.size[2] / (float)length * 3/5); // Adjust size as needed
+
+                        // Attach the custom script
+                        obj.AddComponent<Pedestal>();
+                    }
                 }
             }
         }

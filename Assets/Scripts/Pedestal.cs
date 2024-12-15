@@ -45,15 +45,48 @@ public class Pedestal : MonoBehaviour
         // Fetch the current room index from PlayerPrefs
         int roomIndex = PlayerPrefs.GetInt("RoomIndex", 0);
 
-        // Use MinigameManager to start the appropriate minigame
-        MinigameManager minigameManager = FindObjectOfType<MinigameManager>();
-        if (minigameManager != null)
+        if (roomIndex == 2) // Check if we're in the Cow Room
         {
-            minigameManager.StartMinigame(roomIndex);
+            // Find the Plane object and get its CowPuzzleGenerator component
+            CowPuzzleGenerator puzzleGenerator = FindObjectOfType<CowPuzzleGenerator>();
+
+            if (puzzleGenerator != null)
+            {
+                puzzleGenerator.StartPuzzle();
+            }
+            else
+            {
+                Debug.LogError("CowPuzzleGenerator not found! Ensure it's attached to the correct object.");
+            }
         }
-        else
+        else if (roomIndex == 4) // Check if we're in the Crocodile Room
         {
-            Debug.LogError("MinigameManager not found!");
+            // Find the Plane object and get its CowPuzzleGenerator component
+            JackalPuzzleGenerator puzzleGenerator = FindObjectOfType<JackalPuzzleGenerator>();
+
+            if (puzzleGenerator != null)
+            {
+                puzzleGenerator.StartPuzzle();
+            }
+            else
+            {
+                Debug.LogError("JackalPuzzleGenerator not found! Ensure it's attached to the correct object.");
+            }
+        }
+        else if (roomIndex == 5) // Check if we're in the Crocodile Room
+        {
+            // Find the Plane object and get its CowPuzzleGenerator component
+            CrocodilePuzzleGenerator puzzleGenerator = FindObjectOfType<CrocodilePuzzleGenerator>();
+
+            if (puzzleGenerator != null)
+            {
+                puzzleGenerator.StartPuzzle();
+            }
+            else
+            {
+                Debug.LogError("CrocodilePuzzleGenerator not found! Ensure it's attached to the correct object.");
+            }
         }
     }
+
 }
