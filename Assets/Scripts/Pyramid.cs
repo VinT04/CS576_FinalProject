@@ -509,15 +509,6 @@ public class Pyramid : MonoBehaviour
 
     private IEnumerator FadeAndMove()
     {
-        GameObject canvasTemp = GameObject.Find("Canvas-Temp");
-        if (canvasTemp != null)
-        {
-            canvasTemp.SetActive(false);
-        }
-        else
-        {
-            Debug.LogWarning("Canvas-Temp not found.");
-        }
         // Fade in the black screen using InteractionTextManager
         InteractionTextManager.Instance.FadeInLoadingScreen(1.0f, "Loading ...");
 
@@ -534,7 +525,6 @@ public class Pyramid : MonoBehaviour
 
         // Fade out the black screen using InteractionTextManager
         InteractionTextManager.Instance.FadeOutLoadingScreen(1.0f);
-        //PlayerPrefs.SetInt("RoomIndex", 0);
-        GameObject.Find("Canvas-Temp").SetActive(true);
+        PlayerPrefs.SetInt("RoomIndex", 0);
     }
 }
