@@ -23,19 +23,6 @@ public class Scrolls : MonoBehaviour
         "Queen Hatshepsut"
     };
 
-    //private string[] facts = {
-    //    "Ancient Egypt was unified under its first pharaoh, Narmer, around 3100 BCE.",
-    //    "The Great Pyramid of Giza, built for Pharaoh Khufu, is one of the Seven Wonders of the Ancient World.",
-    //    "Egyptians used a writing system called hieroglyphs, consisting of over 700 symbols.",
-    //    "The Nile River was the lifeblood of Egypt, providing fertile land and transportation.",
-    //    "Pharaohs were considered divine rulers and intermediaries between the gods and the people.",
-    //    "The ancient Egyptians practiced mummification to preserve bodies for the afterlife.",
-    //    "The Rosetta Stone, discovered in 1799, helped scholars decode Egyptian hieroglyphs.",
-    //    "Ra, the sun god, was one of the most important deities in the Egyptian pantheon.",
-    //    "Egyptian medicine was highly advanced, with knowledge of surgery, anatomy, and remedies.",
-    //    "Queen Hatshepsut was one of Egypt's few female pharaohs, ruling during the 15th century BCE."
-    //};
-
     string[] facts = new string[]
     {
         "Ancient Egypt was unified under its first pharaoh, Narmer, around 3100 BCE. This marked the beginning of the dynastic period in Egyptian history.",
@@ -64,7 +51,6 @@ public class Scrolls : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.name);
         if (other.gameObject.name.Contains("Scroll"))
         {
             title_text.text = titles[index];

@@ -81,7 +81,7 @@ public class Tutorial : MonoBehaviour
 
     private void next_prompt()
     {
-        next_prompt();
+        index += 1;
         if (index < popups.Length)
         {
             tutorial_text.text = popups[index];
