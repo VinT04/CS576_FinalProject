@@ -1244,10 +1244,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1561659044197328184, guid: ef6c6eef7f41b694ab3a7540eee9a8b8, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2202414312852039529, guid: ef6c6eef7f41b694ab3a7540eee9a8b8, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
@@ -1301,8 +1297,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6658559631354428521, guid: ef6c6eef7f41b694ab3a7540eee9a8b8, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6658559631354428521, guid: ef6c6eef7f41b694ab3a7540eee9a8b8, type: 3}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6692928550700404804, guid: ef6c6eef7f41b694ab3a7540eee9a8b8, type: 3}
       propertyPath: field of view
@@ -1320,7 +1320,8 @@ PrefabInstance:
       propertyPath: m_Lens.FarClipPlane
       value: 30
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1561659044197328184, guid: ef6c6eef7f41b694ab3a7540eee9a8b8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3698465444217522275, guid: ef6c6eef7f41b694ab3a7540eee9a8b8, type: 3}
