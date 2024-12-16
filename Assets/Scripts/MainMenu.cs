@@ -35,7 +35,7 @@ public class MainMenu : MonoBehaviour
 
     public void NewGame()
     {
-         SceneManager.LoadScene("intro_outdoor");
+         SceneManager.LoadScene("tutorial");
     }
 
     public void LoadGame()
