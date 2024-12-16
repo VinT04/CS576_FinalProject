@@ -11,11 +11,13 @@ public class BlakeMovement:MonoBehaviour
 {
     public bool living = true;
     public GameObject portal;
+
     public Vector3 movement_direction;
     private Animator animation_controller;
     private CharacterController character_controller;
     private Vector3 moveDirection = Vector3.zero;
     public float gravity = 25.0f;
+
     public bool isRotatingLeft = false;
     public bool isRotatingRight = false;
 
@@ -84,6 +86,7 @@ public class BlakeMovement:MonoBehaviour
                     if (Input.GetKey(KeyCode.Space))
                     {
                         // Fast forward jump
+
                         moveDirection.y += 10f;
                         animation_controller.Play("jump start");
                     }
@@ -100,6 +103,7 @@ public class BlakeMovement:MonoBehaviour
                 else
                 {
                     // Walk
+
                     animation_controller.SetInteger("state", 1);
                 }
             }
@@ -107,18 +111,22 @@ public class BlakeMovement:MonoBehaviour
             {
                 // Walk backwards
                 moveDirection = transform.forward * Input.GetAxis("Vertical");
+
                 animation_controller.SetInteger("state", 6);
             }
             else if (Input.GetKey(KeyCode.A))
             {
                 // Walk left
                 moveDirection = transform.right * Input.GetAxis("Horizontal");
+
                 animation_controller.SetInteger("state", 5);
             }
             else if (Input.GetKey(KeyCode.D))
             {
                 // Walk right
+ 
                 moveDirection = transform.right * Input.GetAxis("Horizontal");
+
                 animation_controller.SetInteger("state", 4);
             }
             else
@@ -127,6 +135,7 @@ public class BlakeMovement:MonoBehaviour
                 animation_controller.SetInteger("state", 0);
             }
         }
+
 
         // Handle the rotation of the character
         if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -153,6 +162,7 @@ public class BlakeMovement:MonoBehaviour
         {
             transform.Rotate(0, 100f * Time.deltaTime, 0);
         }
+
 
 
         // Handle movement of character and camera follow
