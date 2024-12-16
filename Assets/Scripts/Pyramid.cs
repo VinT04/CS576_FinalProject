@@ -34,6 +34,7 @@ public class Pyramid : MonoBehaviour
     public GameObject wallPrefab;
     public GameObject doorPrefab;
     public GameObject ankhdoorPrefab;
+    public GameOverMessage msg;
 
     // Add later buttons for intro/try again as needed
     internal CellType[,] map;
@@ -59,7 +60,8 @@ public class Pyramid : MonoBehaviour
         initHallway(map);
         initRooms(map);
         drawMap();
-
+        msg.start = Time.time;
+        Debug.Log(msg.start);
         callMove(); // move the player
 
         // setup minimap
