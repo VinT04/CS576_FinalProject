@@ -11,12 +11,24 @@ public class Mummy : MonoBehaviour
     private float radius;
     private float speed;
     private Animator animation_controller;
+
+    private GameObject canvas_gameOver;
+    private GameObject canvas_win;
+    private GameObject initialCanvas;
     void Start()
     {
         radius = 10f;
-        speed = 2f;
+        speed = 1f;
         pyramid = plane.GetComponent<Pyramid>();
         animation_controller = GetComponent<Animator>();
+
+        // endgame canvas
+        canvas_gameOver = GameObject.FindGameObjectsWithTag("GameOver")[0];
+        canvas_gameOver.SetActive(false);
+
+        canvas_win = GameObject.FindGameObjectsWithTag("GameWon")[0];
+        canvas_win.SetActive(false);
+        initialCanvas = GameObject.Find("Canvas") ?? GameObject.Find("Canvas-Temp");
     }
 
     // Update is called once per frame
@@ -123,6 +135,8 @@ public class Mummy : MonoBehaviour
             Debug.Log("Game Over!");
             Destroy(gameObject);
             // Call end screen in UI for user to play game or restart
+            canvas_gameOver.SetActive(true);
+            initialCanvas.SetActive(false);
         }
     }
 
