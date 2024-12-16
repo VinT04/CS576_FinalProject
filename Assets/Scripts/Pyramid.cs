@@ -63,21 +63,22 @@ public class Pyramid : MonoBehaviour
         callMove(); // move the player
 
         // setup minimap
-        minimap_image = GameObject.Find("Minimap Image").GetComponent<RawImage>();
-        if (minimap_image != null) Debug.Log("found canvas!");
-        minimap_image.texture = Resources.FindObjectsOfTypeAll<RenderTexture>()
-            .FirstOrDefault(rt => rt.name == "Indoor Texture");
-
-        if (GameObject.Find("Canvas") != null)
+        if (GameObject.FindGameObjectWithTag("Canvas-Minimap") != null)
         {
-            GameObject.Find("Canvas-Temp").SetActive(false);
+            if (GameObject.Find("Canvas-Temp") != null)
+            {
+                GameObject.Find("Canvas-Temp").SetActive(false);
+            }
+            minimap_image = GameObject.Find("Minimap Image").GetComponent<RawImage>();
+            minimap_image.texture = Resources.FindObjectsOfTypeAll<RenderTexture>()
+            .FirstOrDefault(rt => rt.name == "Indoor Texture");
         }
 
         // Get the room index
         int roomIndex = PlayerPrefs.GetInt("RoomIndex", 1);
     }
 
-        // function for teleporting player
+    // function for teleporting player
     void moveToTile(int roomNumber)
     {
         // Define a dictionary to map room numbers to their corresponding tile grid coordinates
@@ -106,7 +107,7 @@ public class Pyramid : MonoBehaviour
                 Debug.Log($"Player moved to tile center at {tileCenter} for room {roomNumber}");
                 while (Vector3.Distance(player.transform.position, tileCenter) > 0.1f)
                 {
-                        player.transform.position = tileCenter;
+                    player.transform.position = tileCenter;
                 }
             }
             else
@@ -152,7 +153,7 @@ public class Pyramid : MonoBehaviour
 
     }
 
-        void initHallway(CellType[,] grid)
+    void initHallway(CellType[,] grid)
     {
         for (int i = 2; i < 15; i++)
             grid[1, i] = CellType.FLOOR;
@@ -169,9 +170,9 @@ public class Pyramid : MonoBehaviour
         grid[3, 11] = CellType.FLOOR;
         grid[3, 15] = CellType.FLOOR;
         grid[3, 18] = CellType.FLOOR;
-        grid[3,20] = CellType.FLOOR;
+        grid[3, 20] = CellType.FLOOR;
         //for (int i = 20; i < 23; i++)
-            //grid[3, i] = CellType.FLOOR;
+        //grid[3, i] = CellType.FLOOR;
 
         for (int i = 1; i < 4; i++)
             grid[4, i] = CellType.FLOOR;
@@ -358,9 +359,9 @@ public class Pyramid : MonoBehaviour
         grid[18, 4] = CellType.DOORMAT; // R5 doormat
         grid[18, 3] = CellType.DOOR;
         grid[19, 2] = CellType.EXIT; // Moved to 19,2 from 20,2 to open hall space
-        grid[20,2] = CellType.FLOOR;
+        grid[20, 2] = CellType.FLOOR;
 
-        grid[12,0] = CellType.ENTRANCE;
+        grid[12, 0] = CellType.ENTRANCE;
 
         for (int i = 11; i < 14; i++)
         {
@@ -452,13 +453,13 @@ public class Pyramid : MonoBehaviour
                     GameObject obj = new GameObject("DOORMAT"); // Empty object to handle entering rooms
 
                     obj.name = "DOORMAT";
-                    
+
                     obj.transform.position = new Vector3(x + 0.5f, y, z + 0.5f);
                     obj.transform.parent = transform;
 
                     BoxCollider collider = obj.AddComponent<BoxCollider>();
-                    
-                    collider.isTrigger = true; 
+
+                    collider.isTrigger = true;
                     collider.size = new Vector3(bounds.size[0] / (float)width, wallHeight / 2, bounds.size[2] / (float)length);
 
                     obj.AddComponent<DoorInteraction>(); // For door handling stuff
@@ -470,13 +471,13 @@ public class Pyramid : MonoBehaviour
                     GameObject obj = new GameObject("ANKH_DOORMAT"); // Empty object to handle entering rooms
 
                     obj.name = "ANKH_DOORMAT";
-                    
+
                     obj.transform.position = new Vector3(x + 0.5f, y, z + 0.5f);
                     obj.transform.parent = transform;
 
                     BoxCollider collider = obj.AddComponent<BoxCollider>();
-                    
-                    collider.isTrigger = true; 
+
+                    collider.isTrigger = true;
                     collider.size = new Vector3(bounds.size[0] / (float)width, wallHeight / 2, bounds.size[2] / (float)length);
 
                     //obj.AddComponent<DoorInteraction>(); // For door handling stuff

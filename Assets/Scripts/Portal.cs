@@ -15,7 +15,7 @@ public class LoadSceneOnCollision : MonoBehaviour
     void Start()
     {
         sceneToLoad = "Intro_maze";
-        canvas = GameObject.Find("Canvas");
+        canvas = GameObject.FindGameObjectWithTag("Canvas-Minimap");
     }
 
     private void OnTriggerEnter(Collider _)
