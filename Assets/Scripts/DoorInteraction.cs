@@ -20,6 +20,7 @@ public class DoorInteraction : MonoBehaviour
     {
         // Locate the InteractionText UI element dynamically
         GameObject textObject = GameObject.Find("InteractionText");
+        Debug.Log(textObject);
         if (textObject != null)
         {
             interactionText = textObject.GetComponent<Text>();
@@ -27,7 +28,7 @@ public class DoorInteraction : MonoBehaviour
         }
         else
         {
-            //Debug.LogError("Interaction Text object not found in the scene.");
+            Debug.LogError("Interaction Text object not found in the scene.");
         }
     }
 
