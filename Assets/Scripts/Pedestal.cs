@@ -11,7 +11,8 @@ public class Pedestal : MonoBehaviour
             isPlayerNear = true;
             InteractionTextManager.Instance.ShowText("Press 'E' to start the minigame");
         }
-        else{
+        else
+        {
             isPlayerNear = true;
             InteractionTextManager.Instance.ShowText("Press 'E' to start the minigame");
         }
@@ -24,7 +25,8 @@ public class Pedestal : MonoBehaviour
             isPlayerNear = false;
             InteractionTextManager.Instance.HideText();
         }
-        else {
+        else
+        {
             isPlayerNear = false;
             InteractionTextManager.Instance.HideText();
         }
@@ -57,6 +59,20 @@ public class Pedestal : MonoBehaviour
             else
             {
                 Debug.LogError("CowPuzzleGenerator not found! Ensure it's attached to the correct object.");
+            }
+        }
+        else if (roomIndex == 3) // Check if we're in the Ibis Room
+        {
+            // Find the Plane object and get its CowPuzzleGenerator component
+            IbisPuzzleGenerator puzzleGenerator = FindObjectOfType<IbisPuzzleGenerator>();
+
+            if (puzzleGenerator != null)
+            {
+                puzzleGenerator.StartPuzzle();
+            }
+            else
+            {
+                Debug.LogError("IbisPuzzleGenerator not found! Ensure it's attached to the correct object.");
             }
         }
         else if (roomIndex == 4) // Check if we're in the Crocodile Room
