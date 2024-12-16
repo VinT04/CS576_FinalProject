@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.IO;
+using UnityEngine.SocialPlatforms.Impl;
+using System;
 
 public class Scrolls : MonoBehaviour
 {
@@ -38,10 +41,29 @@ public class Scrolls : MonoBehaviour
         "Queen Hatshepsut was one of Egypt's few female pharaohs, ruling during the 15th century BCE. She established trade networks and commissioned impressive building projects."
     };
 
+    private string filename = "";
+
     // Start is called before the first frame update
     void Start()
     {
-
+        filename = Application.dataPath + "/scores.txt";
+        StreamReader sr = new StreamReader(filename);
+        string line = sr.ReadLine();
+        if (line != null)
+        {
+            try
+            {
+                index = Int32.Parse(line);
+            }
+            catch (FormatException ex)
+            {
+                index = 0;
+            }
+        }
+        else
+        {
+            index = 0;
+        }
     }
 
     // Update is called once per frame
@@ -60,6 +82,10 @@ public class Scrolls : MonoBehaviour
             canvas.SetActive(true);
             Destroy(other.gameObject);
             mummy.upgradeDifficult();
+
+            StreamWriter sw = new StreamWriter(filename, false);
+            sw.WriteLine("" + index);
+            sw.Close();
         }
     }
 }
