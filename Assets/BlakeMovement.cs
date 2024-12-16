@@ -73,14 +73,14 @@ public class BlakeMovement:MonoBehaviour
                 if (Input.GetKey(KeyCode.Space))
                 {
                     // Forward jump
-                    moveDirection = transform.forward * Input.GetAxis("Vertical") * 4f;
+                    moveDirection = transform.forward * Input.GetAxis("Vertical") * 3f;
                     moveDirection.y += 7f;
                     animation_controller.Play("jump start");
                 }
                 else if (Input.GetKey(KeyCode.LeftShift))
                 {
                     // Sprint
-                    moveDirection = transform.forward * Input.GetAxis("Vertical") * 7f;
+                    moveDirection = transform.forward * Input.GetAxis("Vertical") * 5f;
                     if (Input.GetKey(KeyCode.Space))
                     {
                         // Fast forward jump
