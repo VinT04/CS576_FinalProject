@@ -2891,7 +2891,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 87.5}
-  m_SizeDelta: {x: -250, y: -225}
+  m_SizeDelta: {x: -200, y: -225}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1387732468
 MonoBehaviour:
@@ -4370,6 +4370,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorial_text: {fileID: 1387732468}
+  minimap: {fileID: 2095699216}
 --- !u!4 &1939323961
 Transform:
   m_ObjectHideFlags: 0
@@ -4758,7 +4759,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2095699217
 MonoBehaviour:
   m_ObjectHideFlags: 0
