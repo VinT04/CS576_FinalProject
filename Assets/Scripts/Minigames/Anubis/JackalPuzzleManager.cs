@@ -77,15 +77,15 @@ public class JackalPuzzleManager : MonoBehaviour
         float rightPanOffset = Mathf.Clamp(imbalance * 3f, -maxPanOffset, maxPanOffset);
 
         // Update the positions of the pans
-        leftPan.localPosition = new Vector3(leftPan.localPosition.x, leftPanOffset-100, leftPan.localPosition.z);
-        rightPan.localPosition = new Vector3(rightPan.localPosition.x, rightPanOffset-100, rightPan.localPosition.z);
+        leftPan.localPosition = new Vector3(leftPan.localPosition.x, leftPanOffset - 100, leftPan.localPosition.z);
+        rightPan.localPosition = new Vector3(rightPan.localPosition.x, rightPanOffset - 100, rightPan.localPosition.z);
     }
 
     private void CheckPuzzleCompletion()
     {
         if (puzzleComplete) return;
 
-        if (totalLeft == totalRight && totalLeft+totalRight == 24)
+        if (totalLeft == totalRight && totalLeft + totalRight == 24)
         {
             puzzleComplete = true;
             CompletePuzzle();
