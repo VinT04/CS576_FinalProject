@@ -12,3 +12,12 @@ Packages you need:
 - High Definition RP
 - At this point I hit generate lighting a couple times: WINDOW -> RENDERING -> LIGHTING -> GENERATE LIGHTING
 - Visual Scripting
+### Assets Used
+- 4k Ground Textures p1
+- Stone Floor Textures
+- amusedART Mummy Mon
+- ManNeko Assets Adventurer Blake
+- Scrolls
+- Desert Kit
+- Hand Torch
+- CR_Tent and Training Table
