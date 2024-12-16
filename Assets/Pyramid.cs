@@ -51,7 +51,7 @@ public class Pyramid : MonoBehaviour
         drawMap();
 
         // setup minimap
-        minimap_image = GameObject.Find("Minimap Image").GetComponent<RawImage>();
+        minimap_image = GameObject.Find("RawImage").GetComponent<RawImage>();
         if (minimap_image != null) Debug.Log("found canvas!");
         minimap_image.texture = Resources.FindObjectsOfTypeAll<RenderTexture>()
             .FirstOrDefault(rt => rt.name == "Indoor Texture");
