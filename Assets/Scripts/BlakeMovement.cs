@@ -11,21 +11,35 @@ public class BlakeMovement:MonoBehaviour
 {
     public bool living = true;
     public GameObject portal;
-
+    public float gravity = 25.0f;
+    public bool isRotatingLeft = false;
+    public bool isRotatingRight = false;
     public Vector3 movement_direction;
+
     private Animator animation_controller;
     private CharacterController character_controller;
     private Vector3 moveDirection = Vector3.zero;
-    public float gravity = 25.0f;
+    private string die_anim;
 
-    public bool isRotatingLeft = false;
-    public bool isRotatingRight = false;
 
     // Start is called before the first frame update
     void Start()
     {
         animation_controller = GetComponent<Animator>();
         character_controller = GetComponent<CharacterController>();
+        int randomIndex = Random.Range(0, 3); // Generate a random number between 0 and 2
+        switch (randomIndex)
+        {
+            case 0:
+                die_anim = "crashing";
+                break;
+            case 1:
+                die_anim = "dead";
+                break;
+            case 2:
+                die_anim = "dead2";
+                break;
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -41,19 +55,7 @@ public class BlakeMovement:MonoBehaviour
         // End if dead
         if (!living)
         {
-            int randomIndex = Random.Range(0, 3); // Generate a random number between 0 and 2
-            switch (randomIndex)
-            {
-                case 0:
-                    animation_controller.Play("crashing");
-                    break;
-                case 1:
-                    animation_controller.Play("dead");
-                    break;
-                case 2:
-                    animation_controller.Play("dead2");
-                    break;
-            }
+            animation_controller.Play(die_anim);
         }
 
         if (!animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump start") &&
