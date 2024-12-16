@@ -23,6 +23,7 @@ public class LoadSceneOnCollision : MonoBehaviour
     {
         Debug.Log("Collided!");
         DontDestroyOnLoad(canvas);
+        PlayerPrefs.SetInt("RoomIndex",0);
         SceneManager.LoadScene(sceneToLoad);
     }
 

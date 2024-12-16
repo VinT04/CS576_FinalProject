@@ -72,7 +72,7 @@ public class DoorInteraction : MonoBehaviour
                 }
                 else
                 {
-                    InteractionTextManager.Instance.ShowText($"You need {keysRequired - keysCollected} more keys to open this door.");
+                    InteractionTextManager.Instance.ShowText($"You have not been deemed worthy yet. There are {keysRequired - keysCollected} more required to enter.");
                 }
             }
             else {

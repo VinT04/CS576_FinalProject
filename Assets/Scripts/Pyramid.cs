@@ -45,8 +45,6 @@ public class Pyramid : MonoBehaviour
     public RawImage minimap_image;
     private Dictionary<int, Vector3> roomTileLocations;
 
-
-
     void Start()
     {
         wallHeight = transform.localScale.z;
@@ -89,7 +87,7 @@ public class Pyramid : MonoBehaviour
             {0 , (12, 1)},
             { 1, (4, 11) }, // Room 1
             { 2, (4, 19) }, // Room 2
-            { 4, (12, 19) }, // Room 4 -- these got switched somehow when creating rooms, doesn't matter though
+            { 4, (12, 18) }, // Room 4 -- these got switched somehow when creating rooms, doesn't matter though
             { 3, (19, 13) }, // Room 3
             { 5, (20, 2) }, // Room 5
             { 6, (9, 12) }  // Room 6
@@ -123,7 +121,7 @@ public class Pyramid : MonoBehaviour
             Debug.LogError($"No tile coordinates found for room number {roomNumber}");
         }
         Debug.Log($"moved player to {player.transform.position}");
-        PlayerPrefs.SetInt("RoomIndex", 0);
+        //PlayerPrefs.SetInt("RoomIndex", 0); // for setting the room index to 0 as default, but disabled rn
     }
 
     // helper for returning center of tile
