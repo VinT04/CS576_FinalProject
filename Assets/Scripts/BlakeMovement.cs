@@ -52,130 +52,134 @@ public class BlakeMovement:MonoBehaviour
 
     void Update()
     {
-        // End if dead
-        if (!living)
+        if (animation_controller.GetInteger("state") != -1)
         {
-            animation_controller.Play(die_anim);
-        }
-
-        if (!animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump start") &&
-            !animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump ascending") &&
-            !animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump mid air") &&
-            !animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump descending") &&
-            !animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump landing"))
-        {
-            if (Input.GetKey(KeyCode.Space))
+            // End if dead
+            if (!living)
             {
-                // Jump
-                moveDirection.y += 10f;
-                animation_controller.Play("jump start");
+                animation_controller.SetInteger("state", -1);
+                animation_controller.Play(die_anim);
             }
-            else if (Input.GetKey(KeyCode.W))
+
+            if (!animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump start") &&
+                !animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump ascending") &&
+                !animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump mid air") &&
+                !animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump descending") &&
+                !animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump landing"))
             {
-                // Walk
-                moveDirection = transform.forward * Input.GetAxis("Vertical") * 2f;
                 if (Input.GetKey(KeyCode.Space))
                 {
-                    // Forward jump
-                    moveDirection = transform.forward * Input.GetAxis("Vertical") * 3f;
-                    moveDirection.y += 7f;
+                    // Jump
+                    moveDirection.y += 10f;
                     animation_controller.Play("jump start");
                 }
-                else if (Input.GetKey(KeyCode.LeftShift))
+                else if (Input.GetKey(KeyCode.W))
                 {
-                    // Sprint
-                    moveDirection = transform.forward * Input.GetAxis("Vertical") * 5f;
+                    // Walk
+                    moveDirection = transform.forward * Input.GetAxis("Vertical") * 2f;
                     if (Input.GetKey(KeyCode.Space))
                     {
-                        // Fast forward jump
+                        // Forward jump
+                        moveDirection = transform.forward * Input.GetAxis("Vertical") * 3f;
+                        moveDirection.y += 7f;
+                        animation_controller.Play("jump start");
+                    }
+                    else if (Input.GetKey(KeyCode.LeftShift))
+                    {
+                        // Sprint
+                        moveDirection = transform.forward * Input.GetAxis("Vertical") * 5f;
+                        if (Input.GetKey(KeyCode.Space))
+                        {
+                            // Fast forward jump
 
+                            moveDirection.y += 10f;
+                            animation_controller.Play("jump start");
+                        }
+                        else
+                        {
+                            animation_controller.SetInteger("state", 2);
+                        }
+                    }
+                    else if (Input.GetKey(KeyCode.Space))
+                    {
                         moveDirection.y += 10f;
                         animation_controller.Play("jump start");
                     }
                     else
                     {
-                        animation_controller.SetInteger("state", 2);
+                        // Walk
+
+                        animation_controller.SetInteger("state", 1);
                     }
                 }
-                else if (Input.GetKey(KeyCode.Space))
+                else if (Input.GetKey(KeyCode.S))
                 {
-                    moveDirection.y += 10f;
-                    animation_controller.Play("jump start");
+                    // Walk backwards
+                    moveDirection = transform.forward * Input.GetAxis("Vertical");
+
+                    animation_controller.SetInteger("state", 6);
+                }
+                else if (Input.GetKey(KeyCode.A))
+                {
+                    // Walk left
+                    moveDirection = transform.right * Input.GetAxis("Horizontal");
+
+                    animation_controller.SetInteger("state", 5);
+                }
+                else if (Input.GetKey(KeyCode.D))
+                {
+                    // Walk right
+
+                    moveDirection = transform.right * Input.GetAxis("Horizontal");
+
+                    animation_controller.SetInteger("state", 4);
                 }
                 else
                 {
-                    // Walk
-
-                    animation_controller.SetInteger("state", 1);
+                    moveDirection = Vector3.zero;
+                    animation_controller.SetInteger("state", 0);
                 }
             }
-            else if (Input.GetKey(KeyCode.S))
+
+
+            // Handle the rotation of the character
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                // Walk backwards
-                moveDirection = transform.forward * Input.GetAxis("Vertical");
-
-                animation_controller.SetInteger("state", 6);
+                isRotatingLeft = true;
             }
-            else if (Input.GetKey(KeyCode.A))
+            if (Input.GetKeyUp(KeyCode.LeftArrow))
             {
-                // Walk left
-                moveDirection = transform.right * Input.GetAxis("Horizontal");
-
-                animation_controller.SetInteger("state", 5);
+                isRotatingLeft = false;
             }
-            else if (Input.GetKey(KeyCode.D))
+            if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                // Walk right
- 
-                moveDirection = transform.right * Input.GetAxis("Horizontal");
-
-                animation_controller.SetInteger("state", 4);
+                isRotatingRight = true;
             }
-            else
+            if (Input.GetKeyUp(KeyCode.RightArrow))
             {
-                moveDirection = Vector3.zero;
-                animation_controller.SetInteger("state", 0);
+                isRotatingRight = false;
             }
-        }
-
-
-        // Handle the rotation of the character
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            isRotatingLeft = true;
-        }
-        if (Input.GetKeyUp(KeyCode.LeftArrow))
-        {
-            isRotatingLeft = false;
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            isRotatingRight = true;
-        }
-        if (Input.GetKeyUp(KeyCode.RightArrow))
-        {
-            isRotatingRight = false;
-        }
-        if (isRotatingLeft)
-        {
-            transform.Rotate(0, -100f * Time.deltaTime, 0);
-        }
-        if (isRotatingRight)
-        {
-            transform.Rotate(0, 100f * Time.deltaTime, 0);
-        }
+            if (isRotatingLeft)
+            {
+                transform.Rotate(0, -100f * Time.deltaTime, 0);
+            }
+            if (isRotatingRight)
+            {
+                transform.Rotate(0, 100f * Time.deltaTime, 0);
+            }
 
 
 
-        // Handle movement of character and camera follow
-        character_controller.Move(moveDirection * Time.deltaTime);
-        if (transform.position.y > -1.95f)
-        {
-            moveDirection.y -= gravity * Time.deltaTime;
-        }
-        if (transform.position.y < -1.95f)
-        {
-            transform.position = new Vector3(transform.position.x, -1.95f, transform.position.z);
+            // Handle movement of character and camera follow
+            character_controller.Move(moveDirection * Time.deltaTime);
+            if (transform.position.y > -1.95f)
+            {
+                moveDirection.y -= gravity * Time.deltaTime;
+            }
+            if (transform.position.y < -1.95f)
+            {
+                transform.position = new Vector3(transform.position.x, -1.95f, transform.position.z);
+            }
         }
     }
 }
