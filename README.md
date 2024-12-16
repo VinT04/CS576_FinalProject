@@ -12,3 +12,16 @@ Packages you need:
 - High Definition RP
 - At this point I hit generate lighting a couple times: WINDOW -> RENDERING -> LIGHTING -> GENERATE LIGHTING
 - Visual Scripting
+
+### Assets from Asset Store
+## Textures
+- 4K Tiled Ground Textures p1
+- Stone Floor Texture
+## Models/Items
+- _DesertKits64_Sample
+- amusedART Mummy Mon
+- ManNeko_Assets Adventurer Blake
+- Scrolls
+- Tent_CR_MAX_550
+- Wooden Chairs
+- Training Table
