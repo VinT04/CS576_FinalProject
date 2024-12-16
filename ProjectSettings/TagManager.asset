@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Canvas-Minimap
   - Canvas-Temp
+  - Pan
+  - Status
+  - Slot
   layers:
   - Default
   - TransparentFX
