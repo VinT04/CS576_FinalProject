@@ -11,6 +11,7 @@ public class Scrolls : MonoBehaviour
     public TMP_Text title_text;
     public TMP_Text scroll_text;
     public GameObject canvas;
+    public GameObject[] scroll_arr;
     public Mummy mummy;
     internal int index = 0;
 
