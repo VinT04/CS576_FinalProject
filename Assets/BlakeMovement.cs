@@ -8,6 +8,7 @@ using Cinemachine;
 
 public class BlakeMovement:MonoBehaviour
 {
+    public bool living = true;
     public float velocity_forward = 0f;
     public GameObject FollowTarget;
     public Vector3 movement_direction;
@@ -16,7 +17,6 @@ public class BlakeMovement:MonoBehaviour
     private Vector3 moveDirection = Vector3.zero;
     public float jumpTarget = 10f;
     public float gravity = 25.0f;
-    public float speed = 1f;
     public bool isRotatingLeft = false;
     public bool isRotatingRight = false;
 
@@ -30,63 +30,96 @@ public class BlakeMovement:MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump start") ||
-            animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump ascending") ||
-            animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump mid air") ||
-            animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump descending") ||
-            animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump landing"))
+        // End if dead
+        if (!living)
         {
-        }
-        else
-        {
-            if (Input.GetKey(KeyCode.W))
+            int randomIndex = Random.Range(0, 3); // Generate a random number between 0 and 2
+            switch (randomIndex)
             {
-                if (Input.GetKey(KeyCode.LeftShift))
+                case 0:
+                    animation_controller.Play("crashing");
+                    break;
+                case 1:
+                    animation_controller.Play("dead");
+                    break;
+                case 2:
+                    animation_controller.Play("dead2");
+                    break;
+            }
+        }
+        if (!animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump start") &&
+            !animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump ascending") &&
+            !animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump mid air") &&
+            !animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump descending") &&
+            !animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump landing"))
+        {
+            if (Input.GetKey(KeyCode.Space))
+            {
+                // Jump
+                moveDirection.y += 10f;
+                animation_controller.Play("jump start");
+            }
+            else if (Input.GetKey(KeyCode.W))
+            {
+                // Walk
+                moveDirection = transform.forward * Input.GetAxis("Vertical")*2f;
+                if (Input.GetKey(KeyCode.Space))
                 {
+                    // Forward jump
+                    moveDirection.y += 10f;
+                    animation_controller.Play("jump start");
+                }
+                else if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    // Sprint
+                    moveDirection = transform.forward * Input.GetAxis("Vertical") * 10f;
                     if (Input.GetKey(KeyCode.Space))
                     {
+                        // Fast forward jump
                         moveDirection.y += 10f;
                         animation_controller.Play("jump start");
                     }
                     else
                     {
-                        // Sprint
-                        moveDirection = transform.forward * Input.GetAxis("Vertical") * speed * 5f;
                         animation_controller.SetInteger("state", 2);
                     }
+                }
+                else if (Input.GetKey(KeyCode.Space))
+                {
+                    moveDirection.y += 10f;
+                    animation_controller.Play("jump start");
                 }
                 else
                 {
                     // Walk
-                    moveDirection = transform.forward * Input.GetAxis("Vertical") * speed;
                     animation_controller.SetInteger("state", 1);
                 }
             }
             else if (Input.GetKey(KeyCode.S))
             {
                 // Walk backwards
-                moveDirection = transform.forward * Input.GetAxis("Vertical") * speed;
+                moveDirection = transform.forward * Input.GetAxis("Vertical");
                 animation_controller.SetInteger("state", 6);
             }
             else if (Input.GetKey(KeyCode.A))
             {
                 // Walk left
-                moveDirection = transform.right * Input.GetAxis("Horizontal") * speed;
+                moveDirection = transform.right * Input.GetAxis("Horizontal");
                 animation_controller.SetInteger("state", 5);
             }
             else if (Input.GetKey(KeyCode.D))
             {
                 // Walk right
-                moveDirection = transform.right * Input.GetAxis("Horizontal") * speed;
+                moveDirection = transform.right * Input.GetAxis("Horizontal");
                 animation_controller.SetInteger("state", 4);
             }
             else
             {
-                moveDirection = Vector3.Slerp(moveDirection, Vector3.zero, 2f * Time.deltaTime);
+                moveDirection = Vector3.zero;
                 animation_controller.SetInteger("state", 0);
             }
         }
-        //Debug.Log(animation_controller.GetInteger("state"));
+
         // Handle the rotation of the character
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
