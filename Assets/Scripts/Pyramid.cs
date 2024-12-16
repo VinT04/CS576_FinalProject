@@ -145,9 +145,8 @@ public class Pyramid : MonoBehaviour
         // Calculate the center of the tile
         float x = bounds.min[0] + (tileWidth * w) + (tileWidth / 2);
         float z = bounds.min[2] + (tileLength * l) + (tileLength / 2);
-        float y = bounds.min[1]; // Assuming all tiles are at the same height
-
-        return new Vector3(x, 5.0f, z);
+        float y = bounds.max[1]; // Assuming all tiles are at the same height
+        return new Vector3(x, 1.95f, z);
     }
 
     // Update is called once per frame
