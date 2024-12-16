@@ -35,6 +35,7 @@ public class LightSourceController : MonoBehaviour
 
     void Update()
     {
+        if (!gameWon) InteractionTextManager.Instance?.ShowText($"Press R to rotate pillar");
         if (Input.GetKey(KeyCode.R))
         {
             if (!isRotating)
