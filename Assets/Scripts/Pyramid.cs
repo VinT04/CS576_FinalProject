@@ -88,7 +88,7 @@ public class Pyramid : MonoBehaviour
         {
             {0 , (12, 1)},
             { 1, (4, 11) }, // Room 1
-            { 2, (4, 20) }, // Room 2
+            { 2, (4, 19) }, // Room 2
             { 4, (12, 19) }, // Room 4 -- these got switched somehow when creating rooms, doesn't matter though
             { 3, (19, 13) }, // Room 3
             { 5, (20, 2) }, // Room 5
@@ -107,6 +107,7 @@ public class Pyramid : MonoBehaviour
                 // Move the player to the tile center
                 player.transform.position = tileCenter;
                 Debug.Log($"Player moved to tile center at {tileCenter} for room {roomNumber}");
+                Debug.Log(player.transform.position);
                 while (Vector3.Distance(player.transform.position, tileCenter) > 0.1f)
                 {
                         player.transform.position = tileCenter;
