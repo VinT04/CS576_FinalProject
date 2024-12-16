@@ -27,19 +27,6 @@ public class BlakeMovement:MonoBehaviour
     {
         animation_controller = GetComponent<Animator>();
         character_controller = GetComponent<CharacterController>();
-        int randomIndex = Random.Range(0, 3); // Generate a random number between 0 and 2
-        switch (randomIndex)
-        {
-            case 0:
-                die_anim = "crashing";
-                break;
-            case 1:
-                die_anim = "dead";
-                break;
-            case 2:
-                die_anim = "dead2";
-                break;
-        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -58,7 +45,7 @@ public class BlakeMovement:MonoBehaviour
             if (!living)
             {
                 animation_controller.SetInteger("state", -1);
-                animation_controller.Play(die_anim);
+                animation_controller.Play("dead2");
             }
 
             if (!animation_controller.GetCurrentAnimatorStateInfo(0).IsName("jump start") &&
