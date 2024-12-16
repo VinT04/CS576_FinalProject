@@ -379,7 +379,6 @@ public class Pyramid : MonoBehaviour
 
     void drawMap()
     {
-        Debug.Log(1e-6f);
         int roomID = 1;
         int w = 0;
         for (float x = bounds.min[0]; x < bounds.max[0]; x += bounds.size[0] / (float)width, w++)
@@ -391,6 +390,7 @@ public class Pyramid : MonoBehaviour
                     continue;
 
                 float y = bounds.min[1];
+                centers[w, l] = (x + 1f, z + 1f);
 
                 if (map[w, l] == CellType.WALL)
                 {
