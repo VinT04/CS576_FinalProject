@@ -1347,7 +1347,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &986075438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2081,6 +2081,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 480394040}
   plane: {fileID: 140582583}
+  canvasGameOver: {fileID: 986075437}
 --- !u!136 &1178151845
 CapsuleCollider:
   m_ObjectHideFlags: 0
