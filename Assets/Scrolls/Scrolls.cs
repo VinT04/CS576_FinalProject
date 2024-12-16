@@ -8,7 +8,8 @@ public class Scrolls : MonoBehaviour
     public TMP_Text title_text;
     public TMP_Text scroll_text;
     public GameObject canvas;
-    private int index = 0;
+    public Mummy mummy;
+    internal int index = 0;
 
     private string[] titles = {
         "Unification of Egypt",
@@ -72,6 +73,7 @@ public class Scrolls : MonoBehaviour
             index += 1;
             canvas.SetActive(true);
             Destroy(other.gameObject);
+            mummy.upgradeDifficult();
         }
     }
 }
