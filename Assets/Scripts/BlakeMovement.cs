@@ -7,7 +7,7 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.SceneManagement;
 
-public class BlakeMovement:MonoBehaviour
+public class BlakeMovement : MonoBehaviour
 {
     public bool living = true;
     public GameObject portal;
@@ -17,6 +17,8 @@ public class BlakeMovement:MonoBehaviour
     private CharacterController character_controller;
     private Vector3 moveDirection = Vector3.zero;
     public float gravity = 25.0f;
+
+    public GameObject canvas;
 
     public bool isRotatingLeft = false;
     public bool isRotatingRight = false;
@@ -32,6 +34,7 @@ public class BlakeMovement:MonoBehaviour
     {
         if (other.gameObject.name == "PortalSeven" || other.gameObject.name == "Cylinder.013" || other.gameObject.name == "Cylinder.012")
         {
+            DontDestroyOnLoad(canvas);
             SceneManager.LoadScene("intro_maze");
         }
     }
@@ -124,7 +127,7 @@ public class BlakeMovement:MonoBehaviour
             else if (Input.GetKey(KeyCode.D))
             {
                 // Walk right
- 
+
                 moveDirection = transform.right * Input.GetAxis("Horizontal");
 
                 animation_controller.SetInteger("state", 4);
