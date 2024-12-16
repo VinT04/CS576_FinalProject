@@ -6,6 +6,7 @@ using TMPro;
 public class Tutorial : MonoBehaviour
 {
     public TMP_Text tutorial_text;
+    public GameObject minimap;
     private string[] popups = {
         "Welcome to Tomb of Eternal Pursuit\nPress any key to begin",
         "Press \"w\" to move forwards",
@@ -16,8 +17,8 @@ public class Tutorial : MonoBehaviour
         "Press right arrow to look right",
         "Press shift while moving forwards to sprint",
         "Press the spacebar while sprinting to jump",
-        "Use the mini map to check your surroundings\nPress any key to continue",
-        "Read the scroll to get your next steps"
+        "Use the mini map to look around.\nPress any key to continue",
+        "Find the scroll to get your next steps"
     };
     private int index = 0;
     private float timer = 0.0f;
@@ -82,8 +83,13 @@ public class Tutorial : MonoBehaviour
             else if (index == 8 && w && shift && space)
             {
                 next_prompt();
+                minimap.SetActive(true);
             }
-            else if (index >= 9 && any)
+            else if (index == 9 && any)
+            {
+                next_prompt();
+            }
+            else if (index == 10 && any)
             {
                 next_prompt();
             }
