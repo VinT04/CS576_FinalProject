@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Intro_maze.unity
     guid: dff4ca5d3c5a0104884cf18fb5b1b08f
+  - enabled: 1
+    path: Assets/Scenes/Room.unity
+    guid: 99697b048d070c8469d5e030191600d8
   m_configObjects: {}
