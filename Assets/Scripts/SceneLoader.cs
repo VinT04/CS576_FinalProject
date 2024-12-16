@@ -6,12 +6,12 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour
 {
     // Start is called before the first frame update
-    void loadScene(int sceneIndex)
+    public void loadScene(int sceneIndex)
     {
         SceneManager.LoadScene(sceneIndex);
     }
 
-    void quitScene()
+    public void quitScene()
     {
         // works on build only
         Application.Quit();

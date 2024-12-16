@@ -9,6 +9,7 @@ TagManager:
   - Pan
   - Status
   - Slot
+  - Canvas-GameOver
   layers:
   - Default
   - TransparentFX

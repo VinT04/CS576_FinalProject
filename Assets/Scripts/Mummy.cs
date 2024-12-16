@@ -11,12 +11,16 @@ public class Mummy : MonoBehaviour
     private float radius;
     private float speed;
     private Animator animation_controller;
+
+    private GameObject canvasGameOver;
     void Start()
     {
         radius = 10f;
         speed = 2f;
         pyramid = plane.GetComponent<Pyramid>();
         animation_controller = GetComponent<Animator>();
+        canvasGameOver = GameObject.FindGameObjectWithTag("Canvas-GameOver");
+        canvasGameOver.SetActive(false);
     }
 
     // Update is called once per frame
@@ -123,6 +127,7 @@ public class Mummy : MonoBehaviour
             Debug.Log("Game Over!");
             Destroy(gameObject);
             // Call end screen in UI for user to play game or restart
+            canvasGameOver.SetActive(true);
         }
     }
 
