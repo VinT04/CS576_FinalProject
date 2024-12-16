@@ -538,7 +538,7 @@ MonoBehaviour:
   length: 25
   player: {fileID: 480394040}
   wallPrefab: {fileID: 8423556316741606003, guid: 3801c9a8785bfc24184c9224b23d301f, type: 3}
-  doorPrefab: {fileID: 1000011894741232, guid: a0304cd1c89ed5f47b1c609d88092942, type: 3}
+  doorPrefab: {fileID: 1000011859241944, guid: 2f11a19ee587ed44ca4a72f6d3986f99, type: 3}
   ankhdoorPrefab: {fileID: 1000012128009412, guid: b667959c85aac0840abd65af9a3e1517, type: 3}
   minimap_image: {fileID: 11984707}
 --- !u!1 &191467273
@@ -1325,6 +1325,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3172648612499321106, guid: ef6c6eef7f41b694ab3a7540eee9a8b8, type: 3}
+      propertyPath: mummy
+      value: 
+      objectReference: {fileID: 1178151843}
     - target: {fileID: 3172648612499321106, guid: ef6c6eef7f41b694ab3a7540eee9a8b8, type: 3}
       propertyPath: canvas
       value: 
