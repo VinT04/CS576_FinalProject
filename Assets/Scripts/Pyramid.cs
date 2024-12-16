@@ -34,6 +34,8 @@ public class Pyramid : MonoBehaviour
     public GameObject wallPrefab;
     public GameObject doorPrefab;
     public GameObject ankhdoorPrefab;
+    public GameOverMessage gameOver;
+    public GameWinMessage gameWin;
 
     // Add later buttons for intro/try again as needed
     internal CellType[,] map;
@@ -59,7 +61,8 @@ public class Pyramid : MonoBehaviour
         initHallway(map);
         initRooms(map);
         drawMap();
-
+        gameOver.start = Time.time;
+        gameWin.start = Time.time;
         callMove(); // move the player
 
         // setup minimap
@@ -85,7 +88,7 @@ public class Pyramid : MonoBehaviour
         {
             {0 , (12, 1)},
             { 1, (4, 11) }, // Room 1
-            { 2, (4, 20) }, // Room 2
+            { 2, (4, 19) }, // Room 2
             { 4, (12, 19) }, // Room 4 -- these got switched somehow when creating rooms, doesn't matter though
             { 3, (19, 13) }, // Room 3
             { 5, (20, 2) }, // Room 5
@@ -104,6 +107,7 @@ public class Pyramid : MonoBehaviour
                 // Move the player to the tile center
                 player.transform.position = tileCenter;
                 Debug.Log($"Player moved to tile center at {tileCenter} for room {roomNumber}");
+                Debug.Log(player.transform.position);
                 while (Vector3.Distance(player.transform.position, tileCenter) > 0.1f)
                 {
                         player.transform.position = tileCenter;
@@ -378,7 +382,6 @@ public class Pyramid : MonoBehaviour
 
     void drawMap()
     {
-        Debug.Log(1e-6f);
         int roomID = 1;
         int w = 0;
         for (float x = bounds.min[0]; x < bounds.max[0]; x += bounds.size[0] / (float)width, w++)
@@ -390,6 +393,7 @@ public class Pyramid : MonoBehaviour
                     continue;
 
                 float y = bounds.min[1];
+                centers[w, l] = (x + 1f, z + 1f);
 
                 if (map[w, l] == CellType.WALL)
                 {

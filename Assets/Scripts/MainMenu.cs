@@ -10,12 +10,13 @@ public class MainMenu : MonoBehaviour
 {
     public TMP_Text volume_text;
     public Slider volume_slider;
-    public CanvasGroup settings_scroll;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        float vol = AudioListener.volume * 100;
+        volume_text.text = vol.ToString("0");
+        volume_slider.value = (int)vol;
     }
 
     // Update is called once per frame
@@ -26,25 +27,8 @@ public class MainMenu : MonoBehaviour
         AudioListener.volume = val / 100;
     }
 
-    //public void ShowSettings()
-    //{
-    //    settings_scroll.localPosition = new Vector2(-Screen.width, 0);
-    //    LeanTween.moveX(settings_scroll, 0.0f, 2.0f);
-    //    return;
-    //}
-
     public void NewGame()
     {
          SceneManager.LoadScene("tutorial");
-    }
-
-    public void LoadGame()
-    {
-        // SceneManager.LoadScene();
-    }
-
-    public void OptionsMenu()
-    {
-        // SceneManager.LoadScene();
     }
 }
