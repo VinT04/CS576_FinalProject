@@ -11,8 +11,6 @@ public class Mummy : MonoBehaviour
     private float radius;
     private float speed;
     private Animator animation_controller;
-
-    [SerializeField]
     public GameObject canvasGameOver;
     void Start()
     {
