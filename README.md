@@ -1,6 +1,8 @@
 # CS576_FinalProject
 This is the actual repository for the final project
 
+This game is intended to be played in maximized mode.
+
 ## NOTE
 ## MAKE SURE TO ONLY STORE THE ASSETS, PROJECT SETTINGS, PACKAGES, AND THE FINAL_PROJECT SOLLUTION FILE
 
