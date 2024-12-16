@@ -134,6 +134,11 @@ public class Mummy : MonoBehaviour
             // Once mummy hits player, game is over
             Debug.Log("Game Over!");
             Destroy(gameObject);
+            
+            // Setting the living flag in BlakeMovement script to false to trigger death animation
+            player = collision.gameObject;
+            player.GetComponent<BlakeMovement>().living = false;
+
             // Call end screen in UI for user to play game or restart
             canvas_gameOver.SetActive(true);
             initialCanvas.SetActive(false);
