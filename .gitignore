@@ -14,3 +14,4 @@
 !*.cs
 *.json
 
+**/.DS_Store
