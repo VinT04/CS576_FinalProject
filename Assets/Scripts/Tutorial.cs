@@ -18,7 +18,7 @@ public class Tutorial : MonoBehaviour
         "Press shift while moving forwards to sprint",
         "Press the spacebar while sprinting to jump",
         "Use the mini map to look around.\nPress any key to continue",
-        "Find the scroll to get your next steps"
+        "Find the scroll and follow the directions"
     };
     private int index = 0;
     private float timer = 0.0f;
