@@ -409,6 +409,7 @@ public class Pyramid : MonoBehaviour
                 else if (map[w, l] == CellType.DOOR)
                 {
                     GameObject obj = Instantiate(doorPrefab);
+                    obj.transform.Rotate(0, 180, 0);
                     obj.name = "DOOR";
                     obj.transform.localScale = new Vector3(bounds.size[0] / (float)width, wallHeight / 2, bounds.size[2] / (float)length);
                     obj.transform.position = new Vector3(x + 0.5f, y, z + 0.5f);
