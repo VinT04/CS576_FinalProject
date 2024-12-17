@@ -36,6 +36,7 @@ public class Pyramid : MonoBehaviour
     public GameObject ankhdoorPrefab;
     public GameOverMessage gameOver;
     public GameWinMessage gameWin;
+    public InitGame loadGame;
 
     // Add later buttons for intro/try again as needed
     internal CellType[,] map;
@@ -75,6 +76,7 @@ public class Pyramid : MonoBehaviour
         }
 
         // Get the room index
+        loadGame.InitializePlayerPrefs();
         int roomIndex = PlayerPrefs.GetInt("RoomIndex", 1);
     }
 
