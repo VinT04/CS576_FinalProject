@@ -59,7 +59,7 @@ public class Scrolls : MonoBehaviour
             {
                 index = Int32.Parse(line);
             }
-            catch (FormatException ex)
+            catch (FormatException)
             {
                 index = 0;
             }
@@ -72,12 +72,12 @@ public class Scrolls : MonoBehaviour
         HashSet<string> visited_names = new HashSet<string>();
         StreamReader sr2 = new StreamReader(filename2);
         string line2 = sr2.ReadLine();
-        while (line != null)
+        while (line2 != null)
         {
-            visited_names.Add(line);
-            line = sr2.ReadLine();
+            Debug.Log(line2);
+            visited_names.Add(line2);
+            line2 = sr2.ReadLine();
         }
-
         foreach (GameObject s in scroll_arr)
         {
             if (visited_names.Contains(s.name))

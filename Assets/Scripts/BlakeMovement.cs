@@ -32,7 +32,7 @@ public class BlakeMovement:MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "PortalSeven" || other.gameObject.name == "Cylinder.013" || other.gameObject.name == "Cylinder.012")
+        if (other.gameObject.name == "Cylinder.013")
         {
             string filename = Application.dataPath + "/scores.txt";
             string filename2 = Application.dataPath + "/visited.txt";
