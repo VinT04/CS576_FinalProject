@@ -16,11 +16,13 @@ public class BlakeMovement:MonoBehaviour
     public bool isRotatingLeft = false;
     public bool isRotatingRight = false;
     public Vector3 movement_direction;
+    public GameObject gameWonCanvas;
 
     private Animator animation_controller;
     private CharacterController character_controller;
     private Vector3 moveDirection = Vector3.zero;
     private string die_anim;
+    private bool gameWon = false;
 
 
     // Start is called before the first frame update
@@ -42,11 +44,17 @@ public class BlakeMovement:MonoBehaviour
 
             SceneManager.LoadScene("intro_maze");
         }
+        if (PlayerPrefs.GetInt("GameWon", 0) == 1 && (other.gameObject.name == "PortalSeven - End" || other.gameObject.name == "Cylinder.013 - End" || other.gameObject.name == "Cylinder.012 - End"))
+        {
+            gameWon = true;
+            gameWonCanvas.SetActive(true);
+
+        }
     }
 
     void Update()
     {
-        if (animation_controller.GetInteger("state") != -1)
+        if (animation_controller.GetInteger("state") != -1 && !gameWon)
         {
             // End if dead
             if (!living)
