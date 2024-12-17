@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class BlakeMovement:MonoBehaviour
 {
@@ -33,6 +34,12 @@ public class BlakeMovement:MonoBehaviour
     {
         if (other.gameObject.name == "PortalSeven" || other.gameObject.name == "Cylinder.013" || other.gameObject.name == "Cylinder.012")
         {
+            string filename = Application.dataPath + "/scores.txt";
+            string filename2 = Application.dataPath + "/visited.txt";
+
+            File.WriteAllText(filename, string.Empty);
+            File.WriteAllText(filename2, string.Empty);
+
             SceneManager.LoadScene("intro_maze");
         }
     }
