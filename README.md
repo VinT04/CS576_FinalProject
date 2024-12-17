@@ -21,3 +21,14 @@ Packages you need:
 - Desert Kit
 - Hand Torch
 - CR_Tent and Training Table
+
+## Contributions by Team Members
+Manu - 
+
+Vin - 
+
+Aarav - 
+
+Keshav -
+
+Noah - 
