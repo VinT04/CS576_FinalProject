@@ -29,6 +29,6 @@ Vin - I was responsible for setting up the outdoor portion of the map, containin
 
 Aarav - 
 
-Keshav -
+Keshav - My work was generally focused on creating the six rooms of the pyramid: this includes the entering, exiting, and interaction logic, populating room interiors dynamically, and the implementation of the 3D and 2D puzzles in these rooms and any tracking involved with these. I also worked on the audio of the game, including the music. 
 
 Noah - I was responsible for the initial setup of the game's minimap.  With significant help from Vin, we were able to deploy the map with both an outdoor texture and indoor texture of the static game outline that is responsive to both the player's and mummy's location.  My second most important contribution was the puzzle for the Ibis chamber.  Working in a 2D canvas, I created interactive elements to solve a mathematial puzzle under the framework of hieroglpyhs.  The piping for the minigame to work was built off of Keshav's template code so much credit to him is due as well.  
