@@ -6,6 +6,10 @@ TagManager:
   tags:
   - GameOver
   - GameWon
+  - Slot
+  - Status
+  - Pan
+  - Ankh
   layers:
   - Default
   - TransparentFX
