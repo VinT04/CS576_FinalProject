@@ -17,6 +17,7 @@ public class Tutorial : MonoBehaviour
         "Press right arrow to look right",
         "Press shift while moving forwards to sprint",
         "Press the spacebar while sprinting to jump",
+        "Press the escape key to pause",
         "Use the mini map to look around.\nPress any key to continue",
         "Find the scroll and follow the directions"
     };
@@ -44,6 +45,7 @@ public class Tutorial : MonoBehaviour
         bool left = Input.GetKey(KeyCode.LeftArrow);
         bool right = Input.GetKey(KeyCode.RightArrow);
         bool space = Input.GetKey(KeyCode.Space);
+        bool esc = Input.GetKey(KeyCode.Escape);
 
         if (timer > time_limit)
         {
@@ -83,13 +85,19 @@ public class Tutorial : MonoBehaviour
             else if (index == 8 && w && shift && space)
             {
                 next_prompt();
+                time_limit = 1.0f;
+            }
+            else if (index == 9 && esc)
+            {
+                next_prompt();
+                time_limit = 5.0f;
                 minimap.SetActive(true);
             }
-            else if (index == 9 && any)
+            else if (index == 10 && any)
             {
                 next_prompt();
             }
-            else if (index == 10 && any)
+            else if (index == 11 && any)
             {
                 next_prompt();
             }
