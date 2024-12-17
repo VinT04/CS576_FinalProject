@@ -43,11 +43,14 @@ public class Scrolls : MonoBehaviour
     };
 
     private string filename = "";
+    private string filename2 = "";
 
     // Start is called before the first frame update
     void Start()
     {
         filename = Application.dataPath + "/scores.txt";
+        filename2 = Application.dataPath + "/visited.txt";
+
         StreamReader sr = new StreamReader(filename);
         string line = sr.ReadLine();
         if (line != null)
@@ -64,6 +67,23 @@ public class Scrolls : MonoBehaviour
         else
         {
             index = 0;
+        }
+
+        HashSet<string> visited_names = new HashSet<string>();
+        StreamReader sr2 = new StreamReader(filename2);
+        string line2 = sr2.ReadLine();
+        while (line != null)
+        {
+            visited_names.Add(line);
+            line = sr2.ReadLine();
+        }
+
+        foreach (GameObject s in scroll_arr)
+        {
+            if (visited_names.Contains(s.name))
+            {
+                s.SetActive(false);
+            }
         }
     }
 
@@ -87,6 +107,10 @@ public class Scrolls : MonoBehaviour
             StreamWriter sw = new StreamWriter(filename, false);
             sw.WriteLine("" + index);
             sw.Close();
+
+            StreamWriter sw2 = new StreamWriter(filename2, true);
+            sw2.WriteLine(other.gameObject.name);
+            sw2.Close();
         }
     }
 }
