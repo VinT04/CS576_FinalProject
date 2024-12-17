@@ -74,6 +74,7 @@ public class AnkhEvent : MonoBehaviour
         InteractionTextManager.Instance.HideText();
         PlayerPrefs.SetInt("GameWon", 1); // Mark the game as won
         Destroy(ankh);
+        InteractionTextManager.Instance.ShowText("Make it back through the entrance to escape the pyramid!");
     }
 
 
