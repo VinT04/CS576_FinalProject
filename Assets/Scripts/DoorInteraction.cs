@@ -13,8 +13,7 @@ public class DoorInteraction : MonoBehaviour
     public int roomIndex; // Room identifier (e.g., 1 to 5)
     public string mazeSceneName = "Intro_maze";
     public Text interactionText; // text showing on bottom
-    public int keysRequired = 5;
-
+    public int keysRequired = 0; // should be 5, but for testing purposes is 0
 
     private void Start()
     {

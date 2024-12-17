@@ -526,6 +526,6 @@ public class Pyramid : MonoBehaviour
 
         // Fade out the black screen using InteractionTextManager
         InteractionTextManager.Instance.FadeOutLoadingScreen(1.0f);
-        PlayerPrefs.SetInt("RoomIndex", 0);
+        //PlayerPrefs.SetInt("RoomIndex", 0);
     }
 }

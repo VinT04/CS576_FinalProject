@@ -142,6 +142,12 @@ public class Mummy : MonoBehaviour
             // Call end screen in UI for user to play game or restart
             canvas_gameOver.SetActive(true);
             initialCanvas.SetActive(false);
+            PlayerPrefs.SetInt("RoomIndex",0); // Room index is set to 0 by default, means spawn will be in main room
+            PlayerPrefs.SetInt("KeysCollected",0);
+            PlayerPrefs.SetInt("GameWon",0);
+
+            // Save PlayerPrefs to ensure persistence
+            PlayerPrefs.Save();
         }
     }
 

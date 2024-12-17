@@ -31,6 +31,7 @@ public class GameOverMessage : MonoBehaviour
             life = Math.Round(Time.time - start, 2);
         }
         // TODO: implement once number of scrolls is tracked
+        GetComponent<PlayerAudio>().PlayDeathSFX();
         text.text = "You lasted " + life + " seconds, collecting " +  scroll.index + "/10 scrolls";
         //text.text = "Total duration: " + scroll.index + " seconds.";
     }
