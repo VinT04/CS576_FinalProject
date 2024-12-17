@@ -10,6 +10,8 @@ public class RoomCreation : MonoBehaviour
     public GameObject wallPrefab; // ColumnSquare_Small1 Variant
     public GameObject doorPrefab; // Desert_Temple_SegmentSingle is what this should be set to
     public GameObject pedestalPrefab;
+        public GameObject vasePrefab;
+
     internal CellType[,] map;
     internal Bounds bounds;
     internal float wallHeight;
@@ -150,6 +152,21 @@ public class RoomCreation : MonoBehaviour
 
                         // Attach the custom script
                         obj.AddComponent<Pedestal>();
+
+                        // Check if this is room 6 to instantiate the Ankh
+                        if (PlayerPrefs.GetInt("RoomIndex", 1) == 6) // Replace roomNumber with your variable or condition for checking the room
+                        {
+                            GameObject vase = Instantiate(vasePrefab);
+                            vase.name = "ANKH";
+                            vase.tag = "Ankh"; // Assign the tag to the new Ankh
+                            
+                            // Position the Ankh on top of the pedestal
+                            Vector3 pedestalTop = obj.transform.position + new Vector3(0, wallHeight / 7, 0); // Adjust height based on pedestal size
+                            vase.transform.position = pedestalTop;
+
+                            // Optionally parent the Ankh to the pedestal for consistent movement or hierarchy
+                            vase.transform.parent = obj.transform;
+                        }
                     }
                 }
             }

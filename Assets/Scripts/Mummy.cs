@@ -138,10 +138,17 @@ public class Mummy : MonoBehaviour
             // Setting the living flag in BlakeMovement script to false to trigger death animation
             player = collision.gameObject;
             player.GetComponent<BlakeMovement>().living = false;
+            player.GetComponent<PlayerAudio>().PlayDeathSFX();
 
             // Call end screen in UI for user to play game or restart
             canvas_gameOver.SetActive(true);
             initialCanvas.SetActive(false);
+            PlayerPrefs.SetInt("RoomIndex",0); // Room index is set to 0 by default, means spawn will be in main room
+            PlayerPrefs.SetInt("KeysCollected",0);
+            PlayerPrefs.SetInt("GameWon",0);
+
+            // Save PlayerPrefs to ensure persistence
+            PlayerPrefs.Save();
         }
     }
 

@@ -3,7 +3,6 @@ using UnityEngine;
 public class Pedestal : MonoBehaviour
 {
     private bool isPlayerNear = false;
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -101,6 +100,20 @@ public class Pedestal : MonoBehaviour
             else
             {
                 Debug.LogError("CrocodilePuzzleGenerator not found! Ensure it's attached to the correct object.");
+            }
+        }
+        else if (roomIndex == 6)
+        {
+            AnkhEvent ankhEvent = FindObjectOfType<AnkhEvent>();
+        
+            if (ankhEvent != null)
+            {
+                // Start the coroutine from the other script
+                StartCoroutine(ankhEvent.ReceiveAnkh());
+            }
+            else
+            {
+                Debug.LogError("AnkhEvent component not found in the scene!");
             }
         }
     }
